@@ -57,18 +57,19 @@ public class EyesUtilities {
         jc.addCommand("admin", admin);
         jc.parse(args);
 
-        String commandstr = jc.getParsedCommand();
-        if (commandstr == null) {
+        if (jc.getParsedCommand() == null) {
             jc.usage();
             return;
         }
 
         Command command = (Command) jc.getCommands().get(jc.getParsedCommand()).getObjects().get(0);
 
-        if (command instanceof CommandBase)
+        if (command instanceof CommandBase) {
             ((CommandBase) command).Execute();
-        else
+        }
+        else {
             command.run();
+        }
 
         //TODO Migrate test
         //TODO deep search in many batches

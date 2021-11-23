@@ -37,14 +37,6 @@ public abstract class ApiCallHandler {
         return runLongTask(put, ctx);
     }
 
-    public static CloseableHttpResponse sendDeleteRequest(String uri, StringEntity entity, Context ctx) throws InterruptedException, IOException {
-        DeleteRequestWithBody delete = new DeleteRequestWithBody(uri);
-        delete.addHeader("Content-Type", "application/json");
-        delete.setEntity(entity);
-        System.out.println(delete.toString());
-        return runLongTask(delete, ctx);
-    }
-
     private static CloseableHttpResponse runLongTask(HttpRequestBase request, Context ctx) throws InterruptedException, IOException {
         String location;
         CloseableHttpResponse firstResponse = sendRequest(request);
@@ -98,20 +90,5 @@ public abstract class ApiCallHandler {
         throw new RuntimeException(String.format("Unexpected response from request, code: %s, message: %s \n",
                 statusLine.getStatusCode(),
                 statusLine.getReasonPhrase()));
-    }
-
-    private static class DeleteRequestWithBody extends HttpEntityEnclosingRequestBase {
-        public static final String METHOD_NAME = "DELETE";
-        public String getMethod() { return METHOD_NAME; }
-
-        public DeleteRequestWithBody(final String uri) {
-            super();
-            setURI(URI.create(uri));
-        }
-        public DeleteRequestWithBody(final URI uri) {
-            super();
-            setURI(uri);
-        }
-        public DeleteRequestWithBody() { super(); }
     }
 }
