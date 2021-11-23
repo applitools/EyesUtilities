@@ -1,15 +1,15 @@
-# EyesUtilities [ ![Download](https://img.shields.io/github/v/tag/yanirta/EyesUtilities?label=Download&style=plastic) ](https://github.com/yanirta/EyesUtilities/releases/latest)
+# EyesUtilities [ ![Download](https://img.shields.io/github/v/tag/yanirta/EyesUtilities?label=Download&style=plastic) ](https://github.com/applitools/EyesUtilities/releases/latest)
 Eyes Utilities is a Java based CLI tool to extend Applitools capabilities by communicating directly to Applitools API.
 Using EyesUtilities it is possible to generate customized offline reports, perform administration operations,
 generate playback and diff animations, download test diffs and original images and perform operations between branches.
 
 ### Prerequisites
 * Applitools account. If you still don't have your Applitools account,
-you can start your trial by going to the [Applitools website](https://applitools.com).  
-    * To quickly get on-board go to [the getting started tutorial](https://applitools.com/resources/tutorial).  
+  you can start your trial by going to the [Applitools website](https://applitools.com).
+    * To quickly get on-board go to [the getting started tutorial](https://applitools.com/resources/tutorial).
     * If you already have Applitools account but can't find proper tool, try the [Webtester here](https://github.com/yanirta/WebTester).
 * For many listed operations, an additional set of keys will be required.
-To get your keys please reach out to applitools support [via this link](https://help.applitools.com/hc/en-us/requests/new) or at [support@applitools.com](mailto:support@applitools.com).
+  To get your keys please reach out to applitools support [via this link](https://help.applitools.com/hc/en-us/requests/new) or at [support@applitools.com](mailto:support@applitools.com).
 
 The general syntax is derived from the fact that the EyesUtilities is built in Java.  
 As a result every cli call should start with:
@@ -29,7 +29,7 @@ As a result every cli call should start with:
 This command will generate a set of animated gifs for each failing step inside the provided test.
 The animation will iterate between three states: (a) The expected from the baseline, (b) The actual and (c) The actual with purple diff marks.
 After the execution, the results will be saved, the default location is: `{workdir_root}/Artifacts/{batch_id}/{test_id}/`  
-<img src="https://user-images.githubusercontent.com/6667420/28462429-df68b3fc-6e23-11e7-89d7-4827acde2769.gif" width="550">  
+<img src="https://user-images.githubusercontent.com/6667420/28462429-df68b3fc-6e23-11e7-89d7-4827acde2769.gif" width="550">
 
 Syntax:
 > java -jar EyesUtilities.jar anidiffs -k [EntKey] <[optional params]> [ResultUrl]
@@ -40,13 +40,13 @@ Syntax:
     + `-i [mSecs]` - Transition interval between the images in milliseconds. default: 1000
     + `-d [pathTmpl]` - Specify destination path template.
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
-    default: 
-        >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
+      default:
+      >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
         + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
 
 ### Generate test playback
 Generates one unified animated gif with all the actual steps of a test.  
-<img src="https://user-images.githubusercontent.com/6667420/34461889-b818022a-ee3f-11e7-88d4-153124790462.gif" width="550">  
+<img src="https://user-images.githubusercontent.com/6667420/34461889-b818022a-ee3f-11e7-88d4-153124790462.gif" width="550">
 
 Syntax:
 > java -jar EyesUtilities.jar playback -k [EntKey] <[optional params]> [ResultUrl]
@@ -58,11 +58,11 @@ Syntax:
     + `-d [pathTmpl]` - Specify destination path template.
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
-    default: 
-        >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
-        + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
+  default:
+  >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
+  + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
     + `-m` - A Flag, Sets 'on' diff marks if a step is different from it's expected baseline.
-    
+
 ### Download test diffs
 Downloads the images of the failed steps with diff marks on them.
 
@@ -77,9 +77,9 @@ Syntax:
     + `-d [pathTmpl]` - Specify destination path template.
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
-    default: 
-        >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
-        + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
+  default:
+  >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
+  + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
 
 ### Download test images
 Downloads the baseline and the actual images of a test.
@@ -90,15 +90,15 @@ Syntax:
 + Required parameters:
     + `-k [EntKey]` - Your Enterprise api read key.
     + `[ResultUrl]` - Applitools test result url to be analyzed.
- + Optional parameters:   
++ Optional parameters:
     + `-a` - Flag to download only actuals
     + `-b` - Flag to download only baselines
     + `-d [pathTmpl]` - Specify destination path template.
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
-    default: 
-        >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
-        + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
+  default:
+  >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
+  + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
 
 ### Generating batch(es) Report
 This command will generate an offline report of provided Applitools' results url(s),
@@ -118,10 +118,10 @@ Syntax:
     + `-t [FilePath]` - Set report template file. Default `./report.templ`
     + `-rt [title]` - Set the title of the report
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
-    
+
 ##### Template syntax:
 The engine lies beneath this report generation is based on [Velocity framework]() which widely used in MVC frameworks to implement web-apps.
-A template can be constructed with parameters and simple logic using VTL(Velocity Template Language), which's full syntax reference can be found [here](http://velocity.apache.org/engine/1.7/vtl-reference.html).   
+A template can be constructed with parameters and simple logic using VTL(Velocity Template Language), which's full syntax reference can be found [here](http://velocity.apache.org/engine/1.7/vtl-reference.html).
 
 Here is the partial list of parameters that are exposed for usage in template construction:
 + `$title` - The title that (if) passed in the command to be contained.
@@ -150,7 +150,7 @@ Here is the partial list of parameters that are exposed for usage in template co
 + `$batches.TestsMatched` - Overall batches tests matched count
 + `$batches.TestsNew` - Overall batches tests new count
 + `$batches.TestsAborted` - Overall batches tests aborted count
-+ `$batches.StepsTotal` - Overall batches steps total 
++ `$batches.StepsTotal` - Overall batches steps total
 + `$batches.StepsMatched` - Overall batches steps matched count
 + `$batches.StepsMismatched` - Overall batches steps mismatched count
 + `$batches.StepsNew` - Overall batches steps new count
@@ -175,15 +175,15 @@ Here is the partial list of parameters that are exposed for usage in template co
         + `$batch.TestsAborted` - Batch overall aborted tests count.
         + `$batch.TotalTests` - Batch overall total tests count.
         + `$batch.TotalActualSteps` - Batch overall actual total steps.
-        + `$batch.TotalBaselineSteps` - Batch overall baseline total steps. 
-        + `$batch.StepsMatched` - Batch overall matched total steps. 
-        + `$batch.testsMismatched` - Batch overall mismatched total steps. 
-        + `$batch.StepsMissing` - Batch overall missing total steps. 
+        + `$batch.TotalBaselineSteps` - Batch overall baseline total steps.
+        + `$batch.StepsMatched` - Batch overall matched total steps.
+        + `$batch.testsMismatched` - Batch overall mismatched total steps.
+        + `$batch.StepsMissing` - Batch overall missing total steps.
         + `$batch.StepsNew` - Batch overall new total steps.
-        + `$batch.MatchedRate` - Batch overall matched steps rate(%). 
-        + `$batch.MismatchedRate` - Batch overall mismatched steps rate(%). 
-        + `$batch.NewRate` - Batch overall new steps rate(%). 
-        + `$batch.MissingRate` - Batch overall missing steps rate(%). 
+        + `$batch.MatchedRate` - Batch overall matched steps rate(%).
+        + `$batch.MismatchedRate` - Batch overall mismatched steps rate(%).
+        + `$batch.NewRate` - Batch overall new steps rate(%).
+        + `$batch.MissingRate` - Batch overall missing steps rate(%).
         + `#foreach($test in $batch.tests)` - Iterate over each test in $batch.tests
             + `$test.ScenarioName` - The test name
             + `$test.AppName` - Application name
@@ -218,7 +218,7 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `#foreach($step in $test.Steps)` - Iterate over each step in $test.Steps
                 + `$step.ExpectedImage` - Downloads step baseline (expected) image and returns file's relative path.
                 + `$step.ActualImage` - Downloads step actual image and returns file's relative path.
-        
+
 A complete example of a template can be found in[./Report/report.templ](https://github.com/yanirta/EyesUtilities/blob/master/Report/report.templ)  
 This example generates html report but the same idea can be applied on any textual format.
 
@@ -232,7 +232,7 @@ General syntax:
 ##### Sub commands
 + getTeams - List all teams in organization's account
     + Syntax:
-    > java -jar EyesUtilities.jar admin getTeams -k [api-key] -or [org-id] <[optional params]>
+  > java -jar EyesUtilities.jar admin getTeams -k [api-key] -or [org-id] <[optional params]>
     + Required parameters:
         +   `-k [api-key]` - An api key with organizational admin read permissions.
         +   `-or [org-id]` - Organization id*
@@ -241,7 +241,7 @@ General syntax:
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 + getUsers - List all users in a team
     + Syntax:
-    > java -jar EyesUtilities.jar admin getUsers -k [api-key] -or [org-id] -ti [team-id] <[optional params]>
+  > java -jar EyesUtilities.jar admin getUsers -k [api-key] -or [org-id] -ti [team-id] <[optional params]>
     + Required parameters:
         +   `-k [api-key]` - An api key with organizational admin read permissions.
         +   `-or [org-id]` - Organization id*
@@ -251,7 +251,7 @@ General syntax:
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 + addTeam - Add team to organization's account
     + Syntax:
-    > java -jar EyesUtilities.jar admin addTeam -k [api-key] -or [org-id] -tn [team-name] <[optional params]>
+  > java -jar EyesUtilities.jar admin addTeam -k [api-key] -or [org-id] -tn [team-name] <[optional params]>
     + Required parameters:
         +   `-k [api-key]` - An api key with organizational admin write permissions.
         +   `-or [org-id]` - Organization id*
@@ -261,7 +261,7 @@ General syntax:
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 + addUser - Add user to a team
     + Syntax:
-    > java -jar EyesUtilities.jar admin addUser -k [api-key] -or [org-id] -ti [team id] <[optional params]>
+  > java -jar EyesUtilities.jar admin addUser -k [api-key] -or [org-id] -ti [team id] <[optional params]>
     + Required parameters:
         +   `-k [api-key]` - An api key with organizational admin read+write permissions.
         +   `-or [org-id]` - Organization id*
@@ -273,10 +273,10 @@ General syntax:
         +   `-nn [newUserName]` - The full name of the new user, default: extracted from the newUserEmail (the part before the '@').
         +   `-ve` - Set permission to viewer, default: false
         +   `-ad` - Set permission to team admin, default: false
-        +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.        
+        +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 + remUser - Remove user from a team or from organization
     + Syntax:
-    > java -jar EyesUtilities.jar admin remUser -k [api-key] -or [org-id] -ri [remove-user-id] <[optional params]>
+  > java -jar EyesUtilities.jar admin remUser -k [api-key] -or [org-id] -ri [remove-user-id] <[optional params]>
     + Required parameters:
         +   `-k [api-key]` - An api key with organizational admin read+write permissions.
         +   `-or [org-id]` - Organization id*
@@ -285,14 +285,14 @@ General syntax:
         +   `-as [url]` - Applitools alternative server, default: eyes.applitools.com
         +   `-ti [team-id]` - Team id, if set will only be omitted from the team
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
-        
-       
+
+
           * Organization id (orgId) field can be found as one of the url parameters in the admin/manage panel.
 ### Merge branch
 Perform branch merging with additional options.
 
 Syntax:
-> java -jar EyesUtilities.jar merge -k [apiKey] -s [sourceBranch] <[optional params]> 
+> java -jar EyesUtilities.jar merge -k [apiKey] -s [sourceBranch] <[optional params]>
 
 + Required parameters:
     + `-k [apiKey]` - The apiKey must have Merge permissions.
@@ -309,7 +309,7 @@ Unless filter applied, all baselines will be copied.
 If a baseline exists in target branch, it will be overwritten.
 
 Syntax:
-> java -jar EyesTilities.jar copyBaselines -k [apiKey] -t [targetBranch] 
+> java -jar EyesUtilities.jar copyBaselines -k [apiKey] -t [targetBranch]
 
 + Required parameters:
     + `-k [apiKey]` - The apiKey must have Read and Write permissions
@@ -319,9 +319,22 @@ Syntax:
     + `-s [sourceBranch]` - Source branch name  default: 'default' branch
     + `-an [appName]` - Filter baselines by application name
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
-  
+
+### Delete baselines
+Delete baselines by id.
+Only the baseline with the specified id will be deleted.
+
+Syntax:
+> java -jar EyesUtilities.jar deleteBaselines -k [apiKey] -bld [baselineId]
+> 
++ Required parameters:
+    + `-k [apiKey]` - The apiKey must have Read and Write permissions
+    + `-bld [baselineId]` - Delete the baseline with the corresponding id
++ Optional parameters:
+    + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
+
 ## Resources
 + [Applitools website](https://applitools.com)
 + [Web-Tester](https://github.com/yanirta/WebTester)
-+ [Image-Tester](https://github.com/yanirta/ImageTester)
++ [Image-Tester](https://github.com/applitools/ImageTester)
 + [Applitools support portal](http://support.applitools.com/)
