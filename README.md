@@ -29,7 +29,7 @@ As a result every cli call should start with:
 This command will generate a set of animated gifs for each failing step inside the provided test.
 The animation will iterate between three states: (a) The expected from the baseline, (b) The actual and (c) The actual with purple diff marks.
 After the execution, the results will be saved, the default location is: `{workdir_root}/Artifacts/{batch_id}/{test_id}/`  
-<img src="https://user-images.githubusercontent.com/6667420/28462429-df68b3fc-6e23-11e7-89d7-4827acde2769.gif" width="550">
+<img src="https://user-images.githubusercontent.com/90543395/144751574-aaa3b901-f38b-42e0-842c-9039555f4635.gif" width="550">
 
 Syntax:
 > java -jar EyesUtilities.jar anidiffs -k [EntKey] <[optional params]> [ResultUrl]
