@@ -21,7 +21,7 @@ import java.util.HashMap;
 @Parameters(commandDescription = "Prepare report based on a template")
 public class Report extends ResultsAPI {
     private static final String REPORT_FOLDER = "Report";
-    private static final String DEFAULT_REPORT_TEMPLATE_DOWNNLOAD = "https://raw.githubusercontent.com/yanirta/EyesUtilities/master/Report/report.templ";
+    private static final String DEFAULT_REPORT_TEMPLATE_DOWNNLOAD = "https://raw.githubusercontent.com/applitools/EyesUtilities/main/Report/report.templ";
     private PathBuilder pathGen = new PathBuilder("{report_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}");
 
     @Parameter(names = {"-t", "--template"}, description = "Template file.")
