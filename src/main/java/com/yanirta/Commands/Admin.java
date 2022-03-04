@@ -23,7 +23,7 @@ public class Admin extends CommandBase {
     private static final String REMUSER = "remUser";
 
     public void printHelp(String subcmd) {
-        jc.usage(subcmd);
+        jc.usage();
     }
 
     //region sub commadns
@@ -246,7 +246,7 @@ public class Admin extends CommandBase {
                 command.run();
             } catch (Exception e) {
                 System.out.println(e.getMessage());
-                jc.usage(jc.getParsedCommand());
+                jc.usage();
             }
         }
     }

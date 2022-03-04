@@ -1,8 +1,8 @@
 package com.yanirta.obj;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanirta.obj.Serialized.StoredBatchInfoId;
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.net.URL;

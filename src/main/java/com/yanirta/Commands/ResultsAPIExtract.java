@@ -1,5 +1,6 @@
 package com.yanirta.Commands;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanirta.obj.PathBuilder;
 import com.yanirta.obj.Serialized.BatchInfo;
 import com.yanirta.obj.Contexts.ResultsAPIContext;
@@ -7,7 +8,6 @@ import com.yanirta.obj.ResultUrl;
 import com.yanirta.obj.Serialized.TestInfo;
 import com.beust.jcommander.Parameter;
 import org.apache.commons.lang.StringUtils;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.File;
 import java.io.IOException;

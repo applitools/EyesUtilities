@@ -1,10 +1,8 @@
 package com.yanirta.obj.Serialized.Admin;
 
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yanirta.obj.AdminApi;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-
 import java.io.IOException;
 import java.util.HashMap;
 

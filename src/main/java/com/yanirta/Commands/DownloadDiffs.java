@@ -18,10 +18,14 @@ public class DownloadDiffs extends ResultsAPIExtract {
         super(url, viewKey, destination);
     }
 
-    protected void runPerTest(TestInfo ti) throws IOException, InterruptedException {
+    protected void runPerTest(TestInfo ti) {
         List<FailedStep> steps = ti.getFailedSteps();
-        for (FailedStep step : steps) {
-            step.getDiff();
-        }
+        steps.parallelStream().forEach(step -> {
+            try {
+                step.getDiff();
+            } catch (IOException | InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
     }
 }

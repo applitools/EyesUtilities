@@ -1,5 +1,6 @@
 package com.yanirta.obj;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanirta.obj.Serialized.Admin.Account;
 import com.yanirta.obj.Serialized.Admin.User;
 import org.apache.http.HttpResponse;
@@ -10,7 +11,6 @@ import org.apache.http.cookie.Cookie;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.io.InputStream;

@@ -1,4 +1,3 @@
-Manifest-Version: 1.0
+Manifest-Version: 1.4.5
 Main-Class: com.yanirta.EyesUtilities
-Implementation-Version: 1.4.4
 

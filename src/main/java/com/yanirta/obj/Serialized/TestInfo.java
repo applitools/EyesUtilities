@@ -1,10 +1,10 @@
 package com.yanirta.obj.Serialized;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.yanirta.obj.*;
 import com.yanirta.obj.Contexts.ResultsAPIContext;
 import com.yanirta.utils.Utils;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

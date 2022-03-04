@@ -1,12 +1,11 @@
 package com.yanirta.obj.Serialized;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanirta.obj.Contexts.ResultsAPIContext;
 import com.yanirta.obj.PathBuilder;
 import com.yanirta.obj.Result;
 import com.yanirta.obj.Status;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;

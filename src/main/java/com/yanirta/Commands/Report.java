@@ -74,8 +74,12 @@ public class Report extends ResultsAPI {
 
     @Override
     protected HashMap<String, String> getParams() {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("report_root", new File(reportoutfile).getAbsoluteFile().getParentFile().getPath());
+        HashMap<String, String> params = new HashMap<>();
+
+        String reportRootFile = new File(reportoutfile).getAbsoluteFile().getParentFile().getPath();
+        System.out.printf("Report path: [%s]", reportRootFile);
+        params.put("report_root", reportRootFile);
+
         params.put("user_root", new File(System.getProperty("user.dir")).getAbsolutePath());
         params.put("workdir_root", new File("").getAbsolutePath());
         params.put("artifacts", "artifacts");

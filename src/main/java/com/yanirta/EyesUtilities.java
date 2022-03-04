@@ -1,8 +1,19 @@
 package com.yanirta;
 
-import com.yanirta.Commands.*;
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameters;
+import com.yanirta.Commands.Admin;
+import com.yanirta.Commands.AnimatedDiffs;
+import com.yanirta.Commands.Command;
+import com.yanirta.Commands.CommandBase;
+import com.yanirta.Commands.CopyBaseline;
+import com.yanirta.Commands.DeleteBaselines;
+import com.yanirta.Commands.DownloadDiffs;
+import com.yanirta.Commands.DownloadImages;
+import com.yanirta.Commands.MergeBranch;
+import com.yanirta.Commands.Parse;
+import com.yanirta.Commands.Playback;
+import com.yanirta.Commands.Report;
 
 @Parameters(commandDescription = "A 'swiss knife' made to get advanced functionality out of Applitools api")
 public class EyesUtilities {
@@ -35,7 +46,7 @@ public class EyesUtilities {
                 e.printStackTrace();
             }
 
-            jc.usage(jc.getParsedCommand());
+            jc.usage();
         }
     }
 

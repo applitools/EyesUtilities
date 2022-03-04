@@ -1,5 +1,8 @@
 package com.yanirta.utils;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.yanirta.Commands.MergeBranch;
@@ -11,16 +14,12 @@ import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
-import okhttp3.Response;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EntityUtils;
-import org.codehaus.jackson.JsonNode;
-import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 
 import java.io.IOException;
 import java.net.URL;
@@ -131,7 +130,7 @@ public class BaselinesManager {
         return new StringEntity(entity.toString(), ContentType.APPLICATION_JSON);
     }
 
-    public boolean deleteBaselines(final List<String> baselineIds) throws IOException, InterruptedException {
+    public boolean deleteBaselines(final List<String> baselineIds) throws IOException {
         if (baselineIds.isEmpty()) {
             System.out.println("Found 0 baselines to delete");
             return false;
@@ -151,9 +150,7 @@ public class BaselinesManager {
                 .addHeader("Content-Type", "application/json")
                 .build();
 
-        final Response response = client.newCall(request).execute();
-
-        int resultStatusCode = response.code();
+        int resultStatusCode = client.newCall(request).execute().code();
 
         return resultStatusCode == HttpStatus.SC_ACCEPTED || resultStatusCode == HttpStatus.SC_NO_CONTENT;
     }

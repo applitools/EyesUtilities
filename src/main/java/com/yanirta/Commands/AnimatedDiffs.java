@@ -1,10 +1,10 @@
 package com.yanirta.Commands;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanirta.obj.FailedStep;
 import com.yanirta.obj.Serialized.TestInfo;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.Parameters;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;

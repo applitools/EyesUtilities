@@ -1,9 +1,8 @@
 package com.yanirta.obj.Serialized;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yanirta.obj.ResultUrl;
-import org.codehaus.jackson.annotate.JsonIgnoreProperties;
-import org.codehaus.jackson.map.ObjectMapper;
-
 import java.io.IOException;
 import java.net.URL;
 
