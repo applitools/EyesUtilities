@@ -302,6 +302,7 @@ Syntax:
     + `-t [targetBranch]` - Target branch for merge
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
     + `-d` - Delete the source branch after a successful merge. The apiKey must have merge, read and write permissions.
+    + `-db` - After successfully merging baselines from source branch to target branch, delete baselines from source branch. 
 
 ### Copy baselines
 Perform baselines copy with additional options.

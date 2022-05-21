@@ -28,13 +28,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class BaselinesManager {
-    private BranchesAPIContext context;
+    private final BranchesAPIContext context;
     protected static ObjectMapper mapper = new ObjectMapper();
 
     public BaselinesManager(BranchesAPIContext context) {
-
         this.context = context;
     }
 
@@ -51,18 +51,27 @@ public class BaselinesManager {
         return mergeBranchResponse;
     }
 
-    public boolean deleteBranch(String sourceBranch) throws IOException, InterruptedException {
+    public boolean deleteBranch(final String sourceBranch, boolean isDeleteBaselines) throws IOException, InterruptedException {
         BranchInfo bi = getBranchInfoByName(sourceBranch);
         if (bi == null) return false;
         bi.setIsDeleted(true);
-        String url = context.getDeleteUrl(bi.getId());
-        String json = mapper.writeValueAsString(bi);
-        StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+
+        final String url = context.getDeleteUrl(bi.getId());
+        final String json = mapper.writeValueAsString(bi);
+        final StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
+
+        final List<String> baselineIds = getBaselinesByBranch(bi.getName())
+                .stream()
+                .map(BaselineInfo::getId)
+                .collect(Collectors.toList());
 
         try (CloseableHttpResponse response = ApiCallHandler.sendPutRequest(url, entity, context)) {
             switch (response.getStatusLine().getStatusCode()) {
                 case HttpStatus.SC_OK:
                 case HttpStatus.SC_ACCEPTED:
+                    if (isDeleteBaselines && deleteBaselines(baselineIds)) {
+                        System.out.println("Successfully deleted baselines");
+                    }
                     return true;
                 default:
                     throwUnexpectedResponse(response.getStatusLine());
@@ -71,7 +80,7 @@ public class BaselinesManager {
         return false;
     }
 
-    public List<BaselineInfo> getBaselinesByBranch(String branchName) throws IOException, InterruptedException {
+    public List<BaselineInfo> getBaselinesByBranch(final String branchName) throws IOException, InterruptedException {
         List<BaselineInfo> baselines = new ArrayList<>();
         BranchInfo bi = getBranchInfoByName(branchName);
         if (bi == null) return baselines;
@@ -131,6 +140,7 @@ public class BaselinesManager {
     }
 
     public boolean deleteBaselines(final List<String> baselineIds) throws IOException {
+        System.out.println("Deleting the following baselines: " + baselineIds);
         if (baselineIds.isEmpty()) {
             System.out.println("Found 0 baselines to delete");
             return false;
@@ -138,10 +148,20 @@ public class BaselinesManager {
         // OkHttp client will let us make non-standard calls, like passing a body to delete.
         // This 100% needs to move to some sort of dependency injector.
         final OkHttpClient client = new OkHttpClient().newBuilder().build();
+        String baselineBody = IntStream
+                .range(0, baselineIds.size() - 1)
+                .mapToObj(index -> "\"" + baselineIds.get(index) + "\",")
+                .collect(
+                        Collectors.joining(
+                                "",
+                                "{\"ids\":[",
+                                "\"" + baselineIds.get(baselineIds.size() - 1) + "\"" + ("]}\n")
+                        )
+                );
+
         final RequestBody body = RequestBody.create(
                 MediaType.parse("application/json"),
-                baselineIds.stream()
-                        .collect(Collectors.joining("", "{\"ids\":[\"", "\"]}\n"))
+                baselineBody
         );
 
         final Request request = new Request.Builder()
@@ -164,6 +184,6 @@ public class BaselinesManager {
     private BranchInfo getBranchInfoByName(String sourceBranch) throws IOException {
         BranchInfo[] branchInfos = mapper.readValue(new URL(context.getBaseUrl()), BranchInfo[].class);
         Optional<BranchInfo> found = Arrays.stream(branchInfos).filter(b -> b.getName().equals(sourceBranch)).findFirst();
-        return found.isPresent() ? found.get() : null;
+        return found.orElse(null);
     }
 }

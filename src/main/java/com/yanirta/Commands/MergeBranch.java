@@ -1,6 +1,5 @@
 package com.yanirta.Commands;
 
-
 import com.yanirta.obj.Contexts.BranchesAPIContext;
 import com.yanirta.obj.Serialized.MergeBranchResponse;
 import com.yanirta.utils.BaselinesManager;
@@ -15,10 +14,12 @@ public class MergeBranch extends BaselineCommand {
     private String targetBranch = "default";
     @Parameter(names = {"-d", "-deleteSource"}, description = "Delete the source branch after a successful copy")
     private boolean isDelete = false;
+    @Parameter(names = {"-db", "-deleteBaselines"}, description = "Delete the baselines associated")
+    private boolean isDeleteBaselines = false;
 
     @Override
     public void run() throws Exception {
-        System.out.println(String.format("Attempting to merge source branch: %s to target branch: %s.", sourceBranch, targetBranch));
+        System.out.printf("Attempting to merge source branch: %s to target branch: %s.%n", sourceBranch, targetBranch);
         BranchesAPIContext context = BranchesAPIContext.Init(getFormattedServerUrl(), apiKey);
         BaselinesManager baselinesManager = new BaselinesManager(context);
         MergeBranchResponse response = baselinesManager.mergeBranches(this);
@@ -27,8 +28,8 @@ public class MergeBranch extends BaselineCommand {
                     "\nPlease resolve conflicts through yanirta test-manager and try again");
         else {
             System.out.println("\nMerge succeeded");
-            if (isDelete && baselinesManager.deleteBranch(sourceBranch))
-                System.out.println(String.format("Source branch: %s has been deleted", sourceBranch));
+            if (isDelete && baselinesManager.deleteBranch(sourceBranch, isDeleteBaselines))
+                System.out.printf("Source branch: %s has been deleted%n", sourceBranch);
         }
     }
 
