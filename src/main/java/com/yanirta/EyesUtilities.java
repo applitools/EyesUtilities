@@ -15,7 +15,7 @@ import com.yanirta.Commands.Parse;
 import com.yanirta.Commands.Playback;
 import com.yanirta.Commands.Report;
 
-@Parameters(commandDescription = "A 'swiss knife' made to get advanced functionality out of Applitools api")
+@Parameters(commandDescription = "A 'swiss knife' made to get advanced functionality out of Applitools API")
 public class EyesUtilities {
     private static final String cur_ver = EyesUtilities.class.getPackage().getImplementationVersion();
     //TODO add proxy
@@ -42,7 +42,7 @@ public class EyesUtilities {
         } catch (Throwable e) {
             if (e.getMessage()!= null && !e.getMessage().isEmpty())
                 System.out.println(e.getMessage());
-            else{//Gets more messy
+            else{
                 e.printStackTrace();
             }
 

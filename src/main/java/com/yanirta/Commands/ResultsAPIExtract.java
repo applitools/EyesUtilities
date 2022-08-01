@@ -7,7 +7,8 @@ import com.yanirta.obj.Contexts.ResultsAPIContext;
 import com.yanirta.obj.ResultUrl;
 import com.yanirta.obj.Serialized.TestInfo;
 import com.beust.jcommander.Parameter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -26,7 +27,7 @@ public abstract class ResultsAPIExtract extends ResultsAPI {
 
     public ResultsAPIExtract(String resUrl, String viewKey, String destination) {
         super(resUrl, viewKey);
-        if (destination != null && StringUtils.isNotBlank(destination))
+        if (StringUtils.isNotBlank(destination))
             this.destination = destination;
     }
 
@@ -55,7 +56,7 @@ public abstract class ResultsAPIExtract extends ResultsAPI {
             for (TestInfo test : tests) {
                 System.out.printf("[%s/%s] -->\n", i++, total);
                 runPerTest(test);
-                System.out.printf("Done\n");
+                System.out.print("Done\n");
             }
             System.out.println("Batch download done\n");
         } else return;//TODO except

@@ -24,6 +24,7 @@ public abstract class ApiCallHandler {
     }
 
     public static CloseableHttpResponse sendPostRequest(String uri, StringEntity entity, Context ctx) throws InterruptedException, IOException {
+        System.out.println(uri);
         HttpPost post = new HttpPost(uri);
         post.addHeader("Content-Type", "application/json");
         post.setEntity(entity);
@@ -45,9 +46,10 @@ public abstract class ApiCallHandler {
         if (firstResponse.getStatusLine().getStatusCode() != HttpStatus.SC_ACCEPTED)
             throwUnexpectedResponse(firstResponse.getStatusLine());
 
+        System.out.println("?");
         location = firstResponse.getFirstHeader(LOCATION_HEADER).getValue();
         firstResponse.close();
-
+        System.out.println("?2");
         HttpGet get = new HttpGet(ctx.decorateLocation(location));
         try (CloseableHttpResponse response = pollStatus(get, POLLING_RETRIES)) {
 
@@ -62,6 +64,7 @@ public abstract class ApiCallHandler {
 
     private static CloseableHttpResponse sendRequest(HttpRequestBase request) {
         try {
+            System.out.println("?3");
             CloseableHttpResponse result = client.execute(request);
             System.out.println(result.toString());
             return result;

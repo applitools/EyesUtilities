@@ -1,21 +1,14 @@
 package com.yanirta.utils;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Validate {
     public static boolean isAllNull(Object... vars) {
-        for (Object var : vars)
-            if (var != null) return false;
-        return true;
+        return Arrays.stream(vars).noneMatch(Objects::nonNull);
     }
 
     public static boolean isExactlyOneNotNull(Object... vars) {
-        boolean foundOne = false;
-        for (Object var : vars)
-            if (var != null)
-                if (foundOne)
-                    return false;
-                else
-                    foundOne = true;
-        return foundOne;
+        return Arrays.stream(vars).filter(Objects::nonNull).count() == 1;
     }
-
 }

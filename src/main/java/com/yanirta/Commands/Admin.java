@@ -6,7 +6,7 @@ import com.yanirta.obj.Serialized.Admin.Subscriber;
 import com.yanirta.obj.Serialized.Admin.User;
 import com.yanirta.utils.Validate;
 import com.beust.jcommander.*;
-import org.apache.commons.lang.WordUtils;
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class Admin extends CommandBase {
         jc.usage();
     }
 
-    //region sub commadns
+    //region sub commands
     @Parameters(commandDescription = "Get user-id by providing username and password")
     private abstract class AdminCommand implements Command {
         @Parameter(names = {"-as", "--server"}, description = "Applitools server url")
@@ -136,7 +136,7 @@ public class Admin extends CommandBase {
                     newUserName = new ArrayList<>();
                     String[] emailparts = newUserEmail.split("@");
                     String name = emailparts[0];
-                    name = WordUtils.capitalize(name.replaceAll(".", " "));
+                    name = WordUtils.capitalize(name.replaceAll("\\.", " "));
                     newUserName.add(name);
                 }
 

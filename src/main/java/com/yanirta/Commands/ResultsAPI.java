@@ -6,7 +6,7 @@ import com.yanirta.obj.Query;
 import com.yanirta.obj.ResultUrl;
 import com.yanirta.utils.SemiColonSplitter;
 import com.beust.jcommander.Parameter;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.security.InvalidParameterException;
@@ -56,13 +56,12 @@ public abstract class ResultsAPI extends CommandBase {
         if (queries != null && !queries.isEmpty()) {
             if (userName == null || userId == null || StringUtils.isEmpty(userName) || StringUtils.isEmpty(userId))
                 throw new RuntimeException("Queries require userName(-un) and userId parameters(ui) to be specified");
-            Optional<String> first = urls.stream().filter((str) -> ResultUrl.isServerUrl(str)).findFirst();
+            Optional<String> first = urls.stream().filter(ResultUrl::isServerUrl).findFirst();
             if (!first.isPresent())
                 throw new RuntimeException("No server url found in parameters! \n");
             String serverUrl = new ResultUrl(first.get(), "00").getServerAddress();
             extendUrlsWithQueryResults(serverUrl);
         }
-
         return new Batches(getUrls(), viewKey, pg);
     }
 
@@ -70,7 +69,6 @@ public abstract class ResultsAPI extends CommandBase {
         for (String query : queries) {
             if (!Query.isMatching(query)) {
                 System.out.printf("Invalid query section %s \n", query);
-                //throw new RuntimeException(String.format("Invalid query section %s \n", query));
                 continue;
             }
 

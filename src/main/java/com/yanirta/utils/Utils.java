@@ -8,6 +8,7 @@ import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.text.MessageFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.List;
@@ -28,7 +29,7 @@ public abstract class Utils {
         }
 
         @Override public String toString() {
-            return "Size(" + width + ", " + height + ")";
+            return MessageFormat.format("Size({0}, {1})", width, height);
         }
     }
 
@@ -68,7 +69,7 @@ public abstract class Utils {
                 writer.writeToSequence(normalized);
             }
         } finally {
-            writer.close();
+            Objects.requireNonNull(writer).close();
             output.close();
         }
     }
@@ -83,11 +84,10 @@ public abstract class Utils {
     }
 
     public static String toFolderName(String name) {
-        String foldername = new String(name);
-        foldername = foldername.replaceAll("https?:", "");
-        foldername = foldername.replaceAll("www\\.", "");
-        foldername = foldername.replaceAll("/", "");
-        foldername = foldername.replaceAll("\\.", "_");
-        return foldername;
+        return name.replaceAll("https?:", "")
+                .replaceAll("www\\.", "")
+                .replaceAll("/", "")
+                .replaceAll("\\.", "_");
+
     }
 }

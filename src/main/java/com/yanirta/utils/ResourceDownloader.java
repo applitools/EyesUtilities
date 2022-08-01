@@ -11,10 +11,9 @@ import java.net.URL;
 
 public class ResourceDownloader {
 
-    private ResultsAPIContext context;
+    private final ResultsAPIContext context;
 
     public ResourceDownloader(ResultsAPIContext context) {
-
         this.context = context;
     }
 

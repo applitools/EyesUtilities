@@ -9,7 +9,6 @@ public abstract class BaselineCommand extends CommandBase {
     protected String server = "eyes.applitools.com";
 
     protected String getFormattedServerUrl() {
-        String formattedServerUrl = server.replace("https://", "");
-        return formattedServerUrl.replace("http://", "");
+        return server.replace("(http|https)://", "");
     }
 }

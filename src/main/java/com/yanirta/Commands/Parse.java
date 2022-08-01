@@ -24,8 +24,6 @@ public class Parse implements Command {
         if (!onlyBatchId && !onlySessionId) {
             System.out.printf("Batch id: %s \n", resultUrl.getBatchId());
             System.out.printf("Session id: %s \n", resultUrl.getSessionId());
-            //Setting clipboard
-            //Utils.setClipboard(String.format("{\"batchId\": \"%s\", \"sessionId\": \"%s\"}", resultUrl.getBatchId(), resultUrl.getSessionId()));
             Utils.setClipboard(String.format("%s,%s", resultUrl.getBatchId(), resultUrl.getSessionId()));
         } else if (onlyBatchId) {
             System.out.printf("Batch id: %s \n", resultUrl.getBatchId());

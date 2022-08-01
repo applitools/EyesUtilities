@@ -36,7 +36,7 @@ public class AnimatedDiffs extends ResultsAPIExtract {
             try {
                 System.out.printf("\t\t[%s/%s] Downloading...", i++, total);
                 step.getAnimatedDiff(interval);
-                System.out.printf("done\n");
+                System.out.print("done\n");
             } catch (IOException e) {
                 System.out.printf("Failed - %s\n", e.getMessage());
                 //TODO Print verbose error

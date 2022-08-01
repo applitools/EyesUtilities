@@ -19,12 +19,12 @@ public class CopyBaseline extends BaselineCommand {
 
     @Override
     public void run() throws Exception {
-        System.out.println(String.format("Attempting to copy baselines from source branch: %s to target branch: %s.", sourceBranch, targetBranch));
+        System.out.printf("Attempting to copy baselines from source branch: %s to target branch: %s.%n", sourceBranch, targetBranch);
         BranchesAPIContext context = BranchesAPIContext.Init(getFormattedServerUrl(), apiKey);
         BaselinesManager baselinesManager = new BaselinesManager(context);
         List<BaselineInfo> baselinesToCopy = baselinesManager.getBaselinesByBranch(sourceBranch);
         if (!appName.isEmpty()) {
-            System.out.println(String.format("Filtering by app name: %s.", appName));
+            System.out.printf("Filtering by app name: %s.%n", appName);
             baselinesToCopy = baselinesManager.filterBaselinesByAppName(baselinesToCopy, appName);
         }
         if (baselinesManager.copyBaselines(sourceBranch, targetBranch, baselinesToCopy)) {

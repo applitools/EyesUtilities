@@ -19,10 +19,18 @@ public class MergeBranch extends BaselineCommand {
 
     @Override
     public void run() throws Exception {
+
+        System.out.println(sourceBranch);
+        System.out.println(targetBranch);
+        System.out.println(isDelete);
+        System.out.println(isDeleteBaselines);
         System.out.printf("Attempting to merge source branch: %s to target branch: %s.%n", sourceBranch, targetBranch);
         BranchesAPIContext context = BranchesAPIContext.Init(getFormattedServerUrl(), apiKey);
+        System.out.println("Before Baseline Manager");
         BaselinesManager baselinesManager = new BaselinesManager(context);
+        System.out.println("Before merge Branches");
         MergeBranchResponse response = baselinesManager.mergeBranches(this);
+        System.out.println("After merge Branches");
         if (!response.isMerged())
             System.out.println("\nConflicts have been found!!! Merge aborted" +
                     "\nPlease resolve conflicts through yanirta test-manager and try again");
