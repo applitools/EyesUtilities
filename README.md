@@ -219,7 +219,7 @@ Here is the partial list of parameters that are exposed for usage in template co
                 + `$step.ExpectedImage` - Downloads step baseline (expected) image and returns file's relative path.
                 + `$step.ActualImage` - Downloads step actual image and returns file's relative path.
 
-A complete example of a template can be found in[./Report/report.templ](https://github.com/applitools/EyesUtilities/blob/main/Report/report.templ)  
+A complete example of a template can be found [here](https://github.com/applitools/EyesUtilities/blob/main/Report/report.templ)  
 This example generates html report but the same idea can be applied on any textual format.
 
 ### Administration
