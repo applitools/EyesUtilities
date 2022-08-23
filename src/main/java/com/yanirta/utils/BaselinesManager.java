@@ -51,7 +51,6 @@ public class BaselinesManager {
             System.out.println("Reading Value:");
             System.out.println(resp);
             mergeBranchResponse = mapper.readValue(resp, MergeBranchResponse.class);
-            System.out.println(mergeBranchResponse.toString());
         }
         return mergeBranchResponse;
     }

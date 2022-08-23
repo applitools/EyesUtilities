@@ -13,6 +13,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class Step {
     private static final String ARTIFACT_EXT = "png";
@@ -86,9 +87,9 @@ public class Step {
     protected Map<String, String> getPathParams() {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("step_index", String.valueOf(index));
-        String tag = "";
-        if (actual != null) tag = actual.getTag();
-        else if (expected != null) tag = expected.getTag();
+        String tag = "" + UUID.randomUUID();
+        if (actual != null && actual.getTag() != null) tag = actual.getTag();
+        else if (expected != null && expected.getTag() != null) tag = expected.getTag();
         params.put("step_tag", Utils.toFolderName(tag));
         params.put("file_ext", ARTIFACT_EXT);
         return params;

@@ -19,11 +19,6 @@ public class MergeBranch extends BaselineCommand {
 
     @Override
     public void run() throws Exception {
-
-        System.out.println(sourceBranch);
-        System.out.println(targetBranch);
-        System.out.println(isDelete);
-        System.out.println(isDeleteBaselines);
         System.out.printf("Attempting to merge source branch: %s to target branch: %s.%n", sourceBranch, targetBranch);
         BranchesAPIContext context = BranchesAPIContext.Init(getFormattedServerUrl(), apiKey);
         System.out.println("Before Baseline Manager");
