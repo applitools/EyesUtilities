@@ -1,4 +1,4 @@
-# EyesUtilities [ ![Download](https://img.shields.io/github/v/tag/applitools/EyesUtilities?label=Download&style=plastic) ](https://github.com/applitools/EyesUtilities/releases/tag/latest)
+# EyesUtilities [ ![Download](https://img.shields.io/github/v/tag/applitools/EyesUtilities?label=Download&style=plastic) ](https://github.com/applitools/EyesUtilities/releases/latest)
 Eyes Utilities is a Java based CLI tool to extend Applitools capabilities by communicating directly to Applitools API.
 Using EyesUtilities it is possible to generate customized offline reports, perform administration operations,
 generate playback and diff animations, download test diffs and original images and perform operations between branches.
@@ -219,7 +219,7 @@ Here is the partial list of parameters that are exposed for usage in template co
                 + `$step.ExpectedImage` - Downloads step baseline (expected) image and returns file's relative path.
                 + `$step.ActualImage` - Downloads step actual image and returns file's relative path.
 
-A complete example of a template can be found in[./Report/report.templ](https://github.com/applitools/EyesUtilities/blob/main/Report/report.templ)  
+A complete example of a template can be found [here](https://github.com/applitools/EyesUtilities/blob/main/Report/report.templ)  
 This example generates html report but the same idea can be applied on any textual format.
 
 ### Administration
