@@ -34,7 +34,7 @@ After the execution, the results will be saved, the default location is: `{workd
 Syntax:
 > java -jar EyesUtilities.jar anidiffs -k [EntKey] <[optional params]> [ResultUrl]
 + Required parameters:
-    + `-k [EntKey]` - Your Enterprise api read key.
+    + `-k [EntKey]` - API key with read permissions.
     + `[ResultUrl]` - Applitools test result url to be analyzed.
 + Optional parameters:
     + `-i [mSecs]` - Transition interval between the images in milliseconds. default: 1000
@@ -51,7 +51,7 @@ Generates one unified animated gif with all the actual steps of a test.
 Syntax:
 > java -jar EyesUtilities.jar playback -k [EntKey] <[optional params]> [ResultUrl]
 + Required parameters:
-    + `-k [EntKey]` - Your Enterprise api read key.
+    + `-k [EntKey]` - API key with read permissions.
     + `[ResultUrl]` - Applitools test result url to be analyzed.
 + Optional parameters:
     + `-i [mSecs]` - Transition interval between the images in milliseconds. default: 1000
@@ -70,7 +70,7 @@ Syntax:
 > java -jar EyesUtilities.jar diffs -k [EntKey] <[optional params]> [ResultUrl]
 
 + Required parameters:
-    + `-k [EntKey]` - Your Enterprise api read key.
+    + `-k [EntKey]` - API key with read permissions.
     + `[ResultUrl]` - Applitools test result url to be analyzed.
 + Optional parameters:
     + `-i [mSecs]` - Transition interval between the images in milliseconds. default: 1000
@@ -88,7 +88,7 @@ Syntax:
 > java -jar EyesUtilities.jar images -k [EntKey] <[optional params]> [ResultUrl]
 
 + Required parameters:
-    + `-k [EntKey]` - Your Enterprise api read key.
+    + `-k [EntKey]` - API key with read permissions.
     + `[ResultUrl]` - Applitools test result url to be analyzed.
 + Optional parameters:
     + `-a` - Flag to download only actuals
@@ -111,7 +111,7 @@ Syntax:
 > java -jar EyesUtilities.jar report -k [EntKey] <[optional params]> [ResultUrls]
 
 + Required parameters:
-    + `-k [EntKey]` - Your Enterprise api read key.
+    + `-k [EntKey]` - API key with read permissions.
     + `[results]` - Any combination of full result urls and/or batch id's. If only batch-id's provided, a server url must appear once in the list.
 + Optional parameters:
     + `-d [FolderPath]` - Set custom report output destination. Default: `'.'`
@@ -234,7 +234,7 @@ General syntax:
     + Syntax:
   > java -jar EyesUtilities.jar admin getTeams -k [api-key] -or [org-id] <[optional params]>
     + Required parameters:
-        +   `-k [api-key]` - An api key with organizational admin read permissions.
+        +   `-k [api-key]` - API key with read permissions.
         +   `-or [org-id]` - Organization id*
     + Optional parameters:
         +   `-as [url]` - Applitools alternative server, default: eyes.applitools.com
@@ -243,7 +243,7 @@ General syntax:
     + Syntax:
   > java -jar EyesUtilities.jar admin getUsers -k [api-key] -or [org-id] -ti [team-id] <[optional params]>
     + Required parameters:
-        +   `-k [api-key]` - An api key with organizational admin read permissions.
+        +   `-k [api-key]` - API key with read permissions.
         +   `-or [org-id]` - Organization id*
         +   `-ti [team-id]` - Team id
     + Optional parameters:
@@ -253,7 +253,7 @@ General syntax:
     + Syntax:
   > java -jar EyesUtilities.jar admin addTeam -k [api-key] -or [org-id] -tn [team-name] <[optional params]>
     + Required parameters:
-        +   `-k [api-key]` - An api key with organizational admin write permissions.
+        +   `-k [api-key]` - API key with read permissions.
         +   `-or [org-id]` - Organization id*
         +   `-tn [team-name]` - The name of the new team
     + Optional parameters:
@@ -263,7 +263,7 @@ General syntax:
     + Syntax:
   > java -jar EyesUtilities.jar admin addUser -k [api-key] -or [org-id] -ti [team id] <[optional params]>
     + Required parameters:
-        +   `-k [api-key]` - An api key with organizational admin read+write permissions.
+        +   `-k [api-key]` - API key with read permissions.
         +   `-or [org-id]` - Organization id*
         +   `-ti [team-id]` - Team id
     + Optional parameters:
@@ -278,7 +278,7 @@ General syntax:
     + Syntax:
   > java -jar EyesUtilities.jar admin remUser -k [api-key] -or [org-id] -ri [remove-user-id] <[optional params]>
     + Required parameters:
-        +   `-k [api-key]` - An api key with organizational admin read+write permissions.
+        +   `-k [api-key]` - API key with read AND write permissions.
         +   `-or [org-id]` - Organization id*
         +   `-ri [remove-user-id]` - The id of the user to be removed
     + Optional parameters:
@@ -295,7 +295,7 @@ Syntax:
 > java -jar EyesUtilities.jar merge -k [apiKey] -s [sourceBranch] <[optional params]>
 
 + Required parameters:
-    + `-k [apiKey]` - The apiKey must have Merge permissions.
+    + `-k [apiKey]` - API key with merge permissions.
     + `-s [sourceBranch]` - Source branch name
 + Optional parameters:
     + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
@@ -313,7 +313,7 @@ Syntax:
 > java -jar EyesUtilities.jar copyBaselines -k [apiKey] -t [targetBranch]
 
 + Required parameters:
-    + `-k [apiKey]` - The apiKey must have Read and Write permissions
+    + `-k [apiKey]` - API key with read AND write permissions. 
     + `-t [targetBranch]` - Target branch name
 + Optional parameters:
     + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
@@ -329,7 +329,7 @@ Syntax:
 > java -jar EyesUtilities.jar deleteBaselines -k [apiKey] -bld [baselineId]
 > 
 + Required parameters:
-    + `-k [apiKey]` - The apiKey must have Read and Write permissions
+    + `-k [apiKey]` - API key with read AND write permissions. 
     + `-bld [baselineId]` - Delete the baseline with the corresponding id
 + Optional parameters:
     + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
