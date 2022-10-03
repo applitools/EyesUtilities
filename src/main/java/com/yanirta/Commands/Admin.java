@@ -30,7 +30,7 @@ public class Admin extends CommandBase {
     @Parameters(commandDescription = "Get user-id by providing username and password")
     private abstract class AdminCommand implements Command {
         @Parameter(names = {"-as", "--server"}, description = "Applitools server url")
-        protected String server = "eyes.yanirta.com";
+        protected String server = "eyes.applitools.com";
         @Parameter(names = {"-k", "--apiKey"}, description = "Applitools api-key", required = true)
         protected String apiKey;
         @Parameter(names = {"-or", "--orgId"}, description = "Organization id as it appears in your urls", required = true)

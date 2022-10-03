@@ -1,6 +1,7 @@
 package com.yanirta.utils;
 
 import com.yanirta.obj.Contexts.Context;
+import com.yanirta.obj.Factories.CloseableHttpClientFactory;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.*;
@@ -16,7 +17,7 @@ public abstract class ApiCallHandler {
     private static final int POLLING_RETRIES = 10;
     private static final String LOCATION_HEADER = "Location";
 
-    private static final CloseableHttpClient client = HttpClientBuilder.create().build();
+    private static final CloseableHttpClient client = new CloseableHttpClientFactory().getCloseableHttpClient();
 
     public static CloseableHttpResponse sendGetRequest(String uri, Context ctx) throws InterruptedException, IOException {
         HttpGet get = new HttpGet(uri);
