@@ -280,12 +280,11 @@ General syntax:
     + Required parameters:
         +   `-k [api-key]` - API key with read AND write permissions.
         +   `-or [org-id]` - Organization id*
-        +   `-ri [remove-user-id]` - The id of the user to be removed
+        +   `-ri [remove-user-id]` - The id of the user to be removed (this is most likely their email address)
     + Optional parameters:
         +   `-as [url]` - Applitools alternative server, default: eyes.applitools.com
         +   `-ti [team-id]` - Team id, if set will only be omitted from the team
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
-
 
           * Organization id (orgId) field can be found as one of the url parameters in the admin/manage panel.
 ### Merge branch

@@ -1,12 +1,13 @@
 package com.yanirta.Commands;
 
+import com.beust.jcommander.JCommander;
+import com.beust.jcommander.Parameter;
+import com.beust.jcommander.Parameters;
 import com.yanirta.obj.AdminApi;
 import com.yanirta.obj.Serialized.Admin.Account;
 import com.yanirta.obj.Serialized.Admin.Subscriber;
 import com.yanirta.obj.Serialized.Admin.User;
 import com.yanirta.utils.Validate;
-import com.beust.jcommander.*;
-import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class Admin extends CommandBase {
     @Parameters(commandDescription = "Get user-id by providing username and password")
     private abstract class AdminCommand implements Command {
         @Parameter(names = {"-as", "--server"}, description = "Applitools server url")
-        protected String server = "eyes.yanirta.com";
+        protected String server = "eyes.applitools.com";
         @Parameter(names = {"-k", "--apiKey"}, description = "Applitools api-key", required = true)
         protected String apiKey;
         @Parameter(names = {"-or", "--orgId"}, description = "Organization id as it appears in your urls", required = true)
@@ -85,13 +86,6 @@ public class Admin extends CommandBase {
                 }
             }
         }
-
-        private Account find(Account[] accounts, String teamId) {
-            for (Account account : accounts) {
-                if (account.getId().compareTo(teamId) == 0) return account;
-            }
-            return null;
-        }
     }
 
     @Parameters(commandDescription = "Add New Team")
@@ -131,12 +125,12 @@ public class Admin extends CommandBase {
                 if (newUserEmail == null)
                     throw new RuntimeException("Email required!"); //New user require email field
                 if (newUserId == null)
-                    newUserId = newUserEmail;//Deducing userid from email
-                if (newUserName == null) { //Deducing username from email
+                    newUserId = newUserEmail;
+                if (newUserName == null) {
                     newUserName = new ArrayList<>();
                     String[] emailparts = newUserEmail.split("@");
                     String name = emailparts[0];
-                    name = WordUtils.capitalize(name.replaceAll("\\.", " "));
+                    name = name.replaceAll("\\.", " ").toUpperCase();
                     newUserName.add(name);
                 }
 
@@ -154,14 +148,14 @@ public class Admin extends CommandBase {
 
             account.add(currUser, isViewer, isAdmin);
 
-            System.out.printf("Done!\n");
+            System.out.println("User with ID " + newUserEmail + "successfully created");
         }
     }
 
     @Parameters(commandDescription = "Remove user")
     private class RemoveUser extends AdminCommand {
 
-        @Parameter(names = {"-ri", "--removeUserId"}, description = "User id to remove", required = true)
+        @Parameter(names = {"-ri", "--removeUserId"}, description = "User id to remove (this is most likely the user's email address)", required = true)
         private String removeUserId;
 
         @Parameter(names = {"-ti", "--teamId"}, description = "Team id to remove the user from")
@@ -174,16 +168,17 @@ public class Admin extends CommandBase {
                 if (account == null)
                     throw new RuntimeException("Team is not present");
                 account.remove(removeUserId);
-                System.out.printf("done!");
+                System.out.print("User with id " + removeUserId + " successfully removed");
             } else {
-                System.out.printf("You are about to remove the user entirely, are you sure you want to proceed? (Y\\N)\n");
+                System.out.println("Removing the user with id " + removeUserId + ".");
+                System.out.println("You are about to remove the user entirely, are you sure you want to proceed? (Y\\N)\n");
                 BufferedReader buffer = new BufferedReader(new InputStreamReader(System.in));
                 String answer = buffer.readLine();
-                if (answer.toUpperCase().compareTo("Y") == 0 || answer.toUpperCase().compareTo("YES") == 0) {
+                if (answer.toUpperCase().charAt(0) == 'Y') {
                     adminApi.removeUser(removeUserId);
-                    System.out.printf("done!");
+                    System.out.print("User with id " + removeUserId + " successfully removed");
                 } else
-                    System.out.printf("Skipped");
+                    System.out.print("User not removed.");
             }
         }
     }
@@ -216,11 +211,14 @@ public class Admin extends CommandBase {
     }
 
     public void run() throws Exception {
-        if (Validate.isAllNull(getTeams, addTeam, getUsers, addUser, remUser))
-            interactiveAdmin();
-        else if (!Validate.isExactlyOneNotNull(getTeams, addTeam, getUsers, addUser, remUser))
-            return;//todo something
-        else {
+        if (Validate.isAllNull(getTeams, addTeam, getUsers, addUser, remUser)) {
+            throw new RuntimeException("No parameters were provided");
+        } else if (!Validate.isExactlyOneNotNull(getTeams, addTeam, getUsers, addUser, remUser)) {
+            throw new RuntimeException(
+                    "Too many commands. Please specify exactly one command from: " +
+                    "[getTeams, getUsers, addTeam, addUser, remUser]"
+            );
+        } else {
             List<String> subargs = null;
             if (getTeams != null) {
                 subargs = getTeams;
@@ -239,7 +237,7 @@ public class Admin extends CommandBase {
                 subargs.add(0, REMUSER);
             }
 
-            String[] sargs = (String[]) subargs.toArray(new String[subargs.size()]);
+            String[] sargs = subargs.toArray(new String[subargs.size()]);
             try {
                 jc.parse(sargs);
                 Command command = (Command) jc.getCommands().get(jc.getParsedCommand()).getObjects().get(0);
@@ -250,11 +248,4 @@ public class Admin extends CommandBase {
             }
         }
     }
-
-    private void interactiveAdmin() {
-        //todo
-        //But now will print help
-        throw new RuntimeException("No parameters were provided");
-    }
-
 }
