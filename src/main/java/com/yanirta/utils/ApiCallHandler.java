@@ -1,7 +1,6 @@
 package com.yanirta.utils;
 
 import com.yanirta.obj.Contexts.Context;
-import com.yanirta.obj.Factories.CloseableHttpClientFactory;
 import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.methods.*;
@@ -10,14 +9,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
-import java.net.URI;
 
 public abstract class ApiCallHandler {
     private static final long INTERVAL_MULTIPLIER = 2;
     private static final int POLLING_RETRIES = 10;
     private static final String LOCATION_HEADER = "Location";
 
-    private static final CloseableHttpClient client = new CloseableHttpClientFactory().getCloseableHttpClient();
+    private static final CloseableHttpClient client = HttpClientBuilder.create().build();
 
     public static CloseableHttpResponse sendGetRequest(String uri, Context ctx) throws InterruptedException, IOException {
         HttpGet get = new HttpGet(uri);
@@ -25,6 +23,7 @@ public abstract class ApiCallHandler {
     }
 
     public static CloseableHttpResponse sendPostRequest(String uri, StringEntity entity, Context ctx) throws InterruptedException, IOException {
+        System.out.println(uri);
         HttpPost post = new HttpPost(uri);
         post.addHeader("Content-Type", "application/json");
         post.setEntity(entity);
@@ -63,7 +62,7 @@ public abstract class ApiCallHandler {
     private static CloseableHttpResponse sendRequest(HttpRequestBase request) {
         try {
             CloseableHttpResponse result = client.execute(request);
-            System.out.println("HTTP response: " + result.toString());
+            System.out.println(result.toString());
             return result;
         } catch (Exception e) {
             throw new Error("Error message: " + e.getMessage());
