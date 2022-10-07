@@ -1,2 +1,2 @@
 Manifest-Version: 1.5.5
-Main-Class: com.yanirta.EyesUtilities
+Main-Class: com.applitools.EyesUtilities
