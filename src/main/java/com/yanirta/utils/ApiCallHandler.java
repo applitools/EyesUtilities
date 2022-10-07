@@ -9,7 +9,6 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 import java.io.IOException;
-import java.net.URI;
 
 public abstract class ApiCallHandler {
     private static final long INTERVAL_MULTIPLIER = 2;
@@ -24,6 +23,7 @@ public abstract class ApiCallHandler {
     }
 
     public static CloseableHttpResponse sendPostRequest(String uri, StringEntity entity, Context ctx) throws InterruptedException, IOException {
+        System.out.println(uri);
         HttpPost post = new HttpPost(uri);
         post.addHeader("Content-Type", "application/json");
         post.setEntity(entity);
@@ -62,7 +62,7 @@ public abstract class ApiCallHandler {
     private static CloseableHttpResponse sendRequest(HttpRequestBase request) {
         try {
             CloseableHttpResponse result = client.execute(request);
-            System.out.println("HTTP response: " + result.toString());
+            System.out.println(result.toString());
             return result;
         } catch (Exception e) {
             throw new Error("Error message: " + e.getMessage());

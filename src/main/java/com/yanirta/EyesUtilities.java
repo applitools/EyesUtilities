@@ -40,13 +40,11 @@ public class EyesUtilities {
         try {
             main.run(jc, args);
         } catch (Throwable e) {
-            if (e.getMessage()!= null && !e.getMessage().isEmpty())
+            if (e.getMessage() != null && !e.getMessage().isEmpty()) {
                 System.out.println(e.getMessage());
-            else{
+            } else {
                 e.printStackTrace();
             }
-
-            jc.usage();
         }
     }
 
@@ -81,8 +79,5 @@ public class EyesUtilities {
         else {
             command.run();
         }
-
-        //TODO Migrate test
-        //TODO deep search in many batches
     }
 }
