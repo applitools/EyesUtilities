@@ -7,15 +7,18 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.conn.SystemDefaultRoutePlanner;
 
 import java.io.IOException;
+import java.net.ProxySelector;
 
 public abstract class ApiCallHandler {
     private static final long INTERVAL_MULTIPLIER = 2;
     private static final int POLLING_RETRIES = 10;
     private static final String LOCATION_HEADER = "Location";
 
-    private static final CloseableHttpClient client = HttpClientBuilder.create().build();
+    private static final SystemDefaultRoutePlanner routePlanner = new SystemDefaultRoutePlanner(ProxySelector.getDefault());
+    private static final CloseableHttpClient client = HttpClientBuilder.create().setRoutePlanner(routePlanner).build();
 
     public static CloseableHttpResponse sendGetRequest(String uri, Context ctx) throws InterruptedException, IOException {
         HttpGet get = new HttpGet(uri);
@@ -60,6 +63,7 @@ public abstract class ApiCallHandler {
     }
 
     private static CloseableHttpResponse sendRequest(HttpRequestBase request) {
+
         try {
             CloseableHttpResponse result = client.execute(request);
             System.out.println(result.toString());

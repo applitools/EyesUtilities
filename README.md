@@ -337,13 +337,7 @@ Syntax:
 Define proxy settings for network calls made through a proxy server. 
 
 Syntax:
-> java -jar EyesUtilities.jar YOUR_EYES_UTILITIES_COMMAND -k [apiKey] -pu [YOUR_PROXY_URL] -pp [YOUR_PROXY_PORT] -pa [YOUR_PROXY_USERNAME,YOUR_PROXY_PASSWORD]
->
-+ Required parameters:
-    + `-pu [YOUR_PROXY_URL]` - The URL of the proxy server to route network requests through
-+ Optional parameters:
-    + `-pp [YOUR_PROXY_POT]` - Define a port if necessary (i.e. when making network requests directly to an explicit IP address)
-    + `-pa [YOUR_PROXY_USERNAME,YOUR_PROXY_PASSWORD]` - Define a username and password to communicate with proxy if necessary (comma separated)
+> java -Dhttps.proxyHost=[your proxy host] -Dhttps.proxyPort=[your proxy port] -jar EyesUtilities.jar YOUR_EYES_UTILITIES_COMMAND -k [apiKey]
 
 ## Resources
 + [Applitools website](https://applitools.com)
