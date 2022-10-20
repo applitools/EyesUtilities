@@ -334,10 +334,7 @@ Syntax:
     + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
 
 ### Executing EyesUtilities commands through proxy server
-Define proxy settings for network calls made through a proxy server. 
-
-Syntax:
-> java -Dhttps.proxyHost=[your proxy host] -Dhttps.proxyPort=[your proxy port] -jar EyesUtilities.jar YOUR_EYES_UTILITIES_COMMAND -k [apiKey]
+By default, EyesUtilities will use proxy defined on system level. No additional configuration is needed. 
 
 ## Resources
 + [Applitools website](https://applitools.com)
