@@ -23,6 +23,8 @@ public class ActualStepResult {
     private Boolean wasDomUsed;
     private String renderId;
     private String source;
+    private String variantId;
+    private String knownVariantId;
     private HashMap expectedImage;
     private Object activeExpectedMismatchRegions;
 
@@ -182,6 +184,13 @@ public class ActualStepResult {
         this.source = source;
     }
 
+    public String getVariantId() { return variantId; }
+
+    public void setVariantId(String variantId) { this.variantId = variantId; }
+
+    public String getKnownVariantId() { return knownVariantId; }
+
+    public void setKnownVariantId(String knownVariantId) { this.knownVariantId = knownVariantId; }
 
     public Object getActiveExpectedMismatchRegions() {
         return activeExpectedMismatchRegions;

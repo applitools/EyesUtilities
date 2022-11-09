@@ -18,7 +18,6 @@ import com.applitools.commands.Report;
 @Parameters(commandDescription = "A 'swiss knife' made to get advanced functionality out of Applitools API")
 public class EyesUtilities {
     private static final String cur_ver = EyesUtilities.class.getPackage().getImplementationVersion();
-    //TODO add proxy
     private Parse parser = new Parse();
     private DownloadDiffs downloadDiffs = new DownloadDiffs();
     private DownloadImages downloadImages = new DownloadImages();
