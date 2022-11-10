@@ -150,15 +150,6 @@ public class GifSequenceWriter {
     return(node);
   }
   
-  /**
-  public GifSequenceWriter(
-       BufferedOutputStream outputStream,
-       int imageType,
-       int timeBetweenFramesMS,
-       boolean loopContinuously) {
-   
-   */
-  
   public static void main(String[] args) throws Exception {
     if (args.length > 1) {
       // grab the output image type from the first image in the sequence
