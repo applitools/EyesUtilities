@@ -9,6 +9,7 @@ public class Environment {
     private String os;
     private String hostingApp;
     private Map<String, String> displaySize;
+    private String deviceInfo;
 
     //private class
     public String getInferred() {
@@ -19,9 +20,11 @@ public class Environment {
         this.inferred = inferred;
     }
 
-    public String getOs() {
-        return os;
-    }
+    public String getDeviceInfo() { return deviceInfo; }
+
+    public void setDeviceInfo(String deviceInfo) { this.deviceInfo = deviceInfo; }
+
+    public String getOs() { return os; }
 
     public void setOs(String os) {
         this.os = os;
