@@ -149,6 +149,7 @@ public class TestInfo {
         return ScenarioId;
     }
 
+
     public String getScenarioName() {
         return ScenarioName;
     }
@@ -482,6 +483,7 @@ public class TestInfo {
         params.put("os", getEnv().getOs());
         params.put("hostapp", getEnv().getHostingApp());
         params.put("viewport", getEnv().getDisplaySizeStr());
+        params.put("device_info", getEnv().getDeviceInfo());
         this.pathBuilder = pathBuilder.recreate(params);
     }
     //endregion
