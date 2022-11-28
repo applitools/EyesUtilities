@@ -26,3 +26,6 @@ TestData/Private
 .idea/.DS_Store
 .idea/workspace.xml
 src/main/java/.DS_Store
+.classpath
+.project
+.settings/**

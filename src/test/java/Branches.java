@@ -1,5 +1,6 @@
-import com.yanirta.EyesUtilities;
 import org.junit.Test;
+
+import com.applitools.eyesutilities.EyesUtilities;
 
 public class Branches {
     @Test

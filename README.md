@@ -13,17 +13,20 @@ generate playback and diff animations, download test diffs and original images a
 
 The general syntax is derived from the fact that the EyesUtilities is built in Java.  
 As a result every cli call should start with:
->Java -jar EyesUtilities.jar [command] [command specific parameters...]
+>Java -jar EyesUtilities.jar \[command] \[command specific parameters...]
 
 ## Appendix
 * [Generate steps animation](#generate-steps-animation)
 * [Generate test playback](#generate-test-playback)
 * [Download test diffs](#download-test-diffs)
 * [Download test images](#download-test-images)
-* [Generating batch(es) Report](#generating-batches-Report)
+* [Generating batch reports](#generating-batch-reports)
 * [Administration](#administration)
 * [Merge branch](#merge-branch)
 * [Copy baselines](#copy-baselines)
+* [Delete baselines](#delete-baselines)
+* [Proxy server settings](#proxy-server-settings)
+* [Resources](#resources)
 
 ### Generate steps animation
 This command will generate a set of animated gifs for each failing step inside the provided test.
@@ -100,8 +103,8 @@ Syntax:
   >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
   + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
 
-### Generating batch(es) Report
-This command will generate an offline report of provided Applitools' results url(s),
+### Generating batch reports
+This command will generate an offline report for one or more Applitools' results urls,
 based on a provided template.
 The default name and the location of the template is `./report.teml`.
 
@@ -287,6 +290,7 @@ General syntax:
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
           * Organization id (orgId) field can be found as one of the url parameters in the admin/manage panel.
+
 ### Merge branch
 Perform branch merging with additional options.
 
@@ -302,6 +306,7 @@ Syntax:
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
     + `-d` - Delete the source branch after a successful merge. The apiKey must have merge, read and write permissions.
     + `-db` - After successfully merging baselines from source branch to target branch, delete baselines from source branch. 
+
 
 ### Copy baselines
 Perform baselines copy with additional options.
@@ -333,7 +338,7 @@ Syntax:
 + Optional parameters:
     + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
 
-### Executing EyesUtilities commands through proxy server
+### Proxy server settings
 By default, EyesUtilities will use proxy defined on system level. No additional configuration is needed. 
 
 ## Resources
