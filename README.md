@@ -121,7 +121,8 @@ Syntax:
     + `-t [FilePath]` - Set report template file. Default `./report.templ`
     + `-rt [title]` - Set the title of the report
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
-
+    + `-dr` - Generate a test report for all batches that executed in a specified time interval. Example `-dr [12-5-2022,12-10-2022]`
+    
 ##### Template syntax:
 The engine lies beneath this report generation is based on [Velocity framework]() which widely used in MVC frameworks to implement web-apps.
 A template can be constructed with parameters and simple logic using VTL(Velocity Template Language), which's full syntax reference can be found [here](http://velocity.apache.org/engine/1.7/vtl-reference.html).

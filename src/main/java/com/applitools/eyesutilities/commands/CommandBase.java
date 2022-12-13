@@ -11,6 +11,9 @@ public abstract class CommandBase implements Command {
     @Parameter(names = {"-dv"}, description = "Disable SSL certificate validation. !!!Unsecured!!!")
     private boolean disableCertificateValidation = false;
 
+    @Parameter(names = {"-as", "-server"}, description = "Applitools server url. [default com.applitools.com] This is only relevant if generating batch report using date range.")
+    protected String server = "eyes.applitools.com";
+
     public void Execute() throws Exception {
         if (disableCertificateValidation)
             disableCertValidation();

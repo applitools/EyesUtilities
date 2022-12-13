@@ -38,14 +38,14 @@ public class Batches extends ArrayList<BatchInfo> {
 
     public Batches(List<String> urls, String viewKey, PathBuilder pathBuilder) throws IOException {
         //Next is the logic to allow different ways to input multiple results, supporting variations of url, result urls and batch-ids
-        Optional<String> first = urls.stream().filter((str) -> ResultUrl.isResultURL(str)).findFirst();
+        Optional<String> first = urls.stream().filter(ResultUrl::isResultURL).findFirst();
         ResultUrl resUrl = null;
         String serverUrl = null;
         if (first.isPresent()) resUrl = new ResultUrl(first.get());
         else {
-            first = urls.stream().filter((str) -> ResultUrl.isServerUrl(str)).findFirst();
+            first = urls.stream().filter(ResultUrl::isServerUrl).findFirst();
             if (first.isPresent()) serverUrl = first.get();
-            else throw new RuntimeException("At least one full result or server url is required");
+            else throw new RuntimeException("At least one full test result or date range is required");
         }
 
         for (String url : urls) {

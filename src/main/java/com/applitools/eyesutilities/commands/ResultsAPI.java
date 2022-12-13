@@ -4,6 +4,10 @@ import com.applitools.eyesutilities.obj.Batches;
 import com.applitools.eyesutilities.obj.PathBuilder;
 import com.applitools.eyesutilities.obj.Query;
 import com.applitools.eyesutilities.obj.ResultUrl;
+import com.applitools.eyesutilities.obj.contexts.BatchesAPIContext;
+import com.applitools.eyesutilities.utils.BatchesManager;
+import com.applitools.eyesutilities.utils.DateSplitter;
+import com.applitools.eyesutilities.utils.DateValidator;
 import com.applitools.eyesutilities.utils.SemiColonSplitter;
 import com.beust.jcommander.Parameter;
 import org.apache.commons.lang3.StringUtils;
@@ -16,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 public abstract class ResultsAPI extends CommandBase {
-    @Parameter(description = "<result url(s)>", required = true)
+    @Parameter(description = "<result url(s)>")
     private List<String> urls;
 
     @Parameter(names = {"-k", "--key"}, description = "Enterprise view key", required = true)
@@ -31,7 +35,22 @@ public abstract class ResultsAPI extends CommandBase {
     @Parameter(names = {"-q", "--query"}, description = "Query for specific batches by specific properties, SemiColon(;) separated 'or' operand.", splitter = SemiColonSplitter.class)
     protected List<String> queries;
 
+    @Parameter(
+            names = {"-dr", "--dateRange"},
+            description = "Date range to check for batches",
+            splitter = DateSplitter.class,
+            validateWith = DateValidator.class
+    )
+    protected List<String> dates;
+
+    @Parameter(names = {"-l", "--limit"}, description = "Maximum number of batches to query for")
+    protected int limit = 1000;
+
+    private String startedBefore;
+    private String startedAfter;
+
     public ResultsAPI() {
+
     }
 
     public ResultsAPI(String resUrl, String viewKey) {
@@ -51,8 +70,25 @@ public abstract class ResultsAPI extends CommandBase {
 
     abstract protected HashMap<String, String> getParams();
 
+    private void generateBatchUrls() {
+        BatchesAPIContext context = BatchesAPIContext.Init(server, viewKey, startedBefore, startedAfter, limit);
+        BatchesManager batchesManager = new BatchesManager(context);
+        urls = batchesManager.getTestResultsUrls();
+    }
+
     protected Batches getBatches(PathBuilder pathGen) throws IOException {
         PathBuilder pg = pathGen.recreate(getParams());
+
+        // If date ranges are passed in lieu of test result URLs, batches that executed in the time interval
+        // will be the batches considered for the generated report
+        if (dates != null && dates.size() == 2) {
+            startedAfter = dates.get(0);
+            startedBefore = dates.get(1);
+            if (startedBefore != null && startedAfter != null) {
+                generateBatchUrls();
+            }
+        }
+
         if (queries != null && !queries.isEmpty()) {
             if (userName == null || userId == null || StringUtils.isEmpty(userName) || StringUtils.isEmpty(userId))
                 throw new RuntimeException("Queries require userName(-un) and userId parameters(ui) to be specified");
