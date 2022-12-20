@@ -26,6 +26,7 @@ public class TestInfo {
     private Boolean isDefaultStatus;
     private com.applitools.eyesutilities.obj.Status Status;
     private Object savedTo;
+    private String runBy;
     private String runningSessionId;
     private String legacySessionId;
     private Object startInfo;
@@ -33,7 +34,10 @@ public class TestInfo {
     private String State;
     private String StartedAt;
     private String modelId;
+    private String envId;
+    private String assignedTo;
     private Integer Duration;
+    private Integer pendingDuration;
     private Boolean isDifferent;
     private Environment Env;
     private Object appEnvironment;
@@ -516,6 +520,39 @@ public class TestInfo {
             if (results[i] == criteria)
                 ++count;
         return count;
+    }
+
+    public String getRunBy() {
+        return runBy;
+    }
+
+    public void setRunBy(String runBy) {
+        this.runBy = runBy;
+    }
+
+
+    public Integer getPendingDuration() {
+        return pendingDuration;
+    }
+
+    public void setPendingDuration(Integer pendingDuration) {
+        this.pendingDuration = pendingDuration;
+    }
+
+    public String getEnvId() {
+        return envId;
+    }
+
+    public void setEnvId(String envId) {
+        this.envId = envId;
+    }
+
+    public String getAssignedTo() {
+        return assignedTo;
+    }
+
+    public void setAssignedTo(String assignedTo) {
+        this.assignedTo = assignedTo;
     }
     //endregion
 

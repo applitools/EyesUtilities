@@ -195,17 +195,19 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `$test.BranchName` - Actual branch name (Destination branch)
             + `$test.BaselineBranchName` - Baseline branch name (Source branch)
             + `$test.Id` - Test id
+            + `$test.RunBy` - Total mismatching steps in test
+            + `$test.AssignedTo` - What user is this test assigned to?
             + `$test.StartedAt` - Started date/time
             + `$test.Duration` - Test duration in seconds
             + `$test.Status` - Current test status
-            + `$test.State` - Test state wheter Completed or not
+            + `$test.State` - Is test completed?
             + `$test.Result` - Test execution result
             + `$test.BaselineEnvId` - Baseline Env-Id
             + `$test.IsAborted` - Is Aborted?
             + `$test.IsDifferent` - Is test has differences?
-            + `$test.IsDefaultStatus` - Is the current status is default or overridden?
-            + `$test.IsNew` - Is the baseline is new?
-            + `$test.IsStarred` - Is Starred in the dashboard?
+            + `$test.IsDefaultStatus` - Is the current status default or overridden?
+            + `$test.IsNew` - Is the baseline new?
+            + `$test.IsStarred` - Is test starred in the dashboard?
             + `$test.TotalBaselineSteps` - Total baseline steps in test
             + `$test.TotalActualSteps` - Total actual steps in test
             + `$test.MissingCount` - Total missing steps in test
@@ -213,6 +215,11 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `$test.MatchedCount` - Total matching steps in test
             + `$test.MismatchedCount` - Total mismatching steps in test
             + `$test.getPlaybackAnimation` - Download & Generate the test flow as an animated gif and returns it's relative path.
+            + `$test.Env.hostingApp` - Browser used for test
+            + `$test.Env.os` - OS used for test
+            + `$test.Env.getDisplaySizeStr()` - Viewport size for test
+            + `$test.Env.deviceInfo` - Device name (Desktop or unique mobile device name)
+            + `$test.Env.inferred` - Environment user agent string
             + `#foreach($step in $test.FailedSteps)` - Iterate over each step in $test.FailedSteps
                 + `$step.Diff` - Download & Generate step diff image and returns file's relative path.
                 + `$step.AnimatedThumbprints` - Download & Generate step animated thumbprint and returns file's relative path.
@@ -222,6 +229,7 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `#foreach($step in $test.Steps)` - Iterate over each step in $test.Steps
                 + `$step.ExpectedImage` - Downloads step baseline (expected) image and returns file's relative path.
                 + `$step.ActualImage` - Downloads step actual image and returns file's relative path.
+            
 
 A complete example of a template can be found [here](https://github.com/applitools/EyesUtilities/blob/main/Report/report.templ)  
 This example generates html report but the same idea can be applied on any textual format.
