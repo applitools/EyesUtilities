@@ -556,5 +556,16 @@ public class TestInfo {
     }
     //endregion
 
+    /**
+     * Utility method to allow customers to display accessibility test result for test step in report.
+     * @return Accessibility status of test step if present, blank string if no accessibility status is present.
+     */
+    public String getAccessibilityResult() {
+        for (ActualStepResult stepResult : ActualAppOutput) {
+            if (stepResult.getAccessibilityStatus() == null) return "";
+            if (stepResult.getAccessibilityStatus().get("status").equals("Failed")) return "Failed";
+        }
+        return "Passed";
+    }
 
 }
