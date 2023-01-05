@@ -215,6 +215,7 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `$test.MatchedCount` - Total matching steps in test
             + `$test.MismatchedCount` - Total mismatching steps in test
             + `$test.getPlaybackAnimation` - Download & Generate the test flow as an animated gif and returns it's relative path.
+            + `$test.getAccessibilityResult()` - Accessibility status results for test, blank string if no accessibility testing performed    
             + `$test.Env.hostingApp` - Browser used for test
             + `$test.Env.os` - OS used for test
             + `$test.Env.getDisplaySizeStr()` - Viewport size for test
