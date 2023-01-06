@@ -1,5 +1,7 @@
 package com.applitools.eyesutilities.obj.serialized.admin;
 
+import java.util.HashMap;
+
 public class User {
     String id;
     String email;
@@ -7,6 +9,9 @@ public class User {
     String sessionId;
     String lastSessionStartedAt;
     String addedAt;
+    int numberOfSuccesfulLogins;
+    HashMap<String, String> settings;
+    HashMap<String, Object> plgSettings;
 
     public User() {
     }
@@ -63,6 +68,28 @@ public class User {
 
     public void setAddedAt(String addedAt) {
         this.addedAt = addedAt;
+    }
+
+    public int getNumberOfSuccesfulLogins() { return numberOfSuccesfulLogins; }
+
+    public void setNumberOfSuccesfulLogins(int numberOfSuccesfulLogins) {
+        this.numberOfSuccesfulLogins = numberOfSuccesfulLogins;
+    }
+
+    public HashMap<String, String> getSettings() {
+        return settings;
+    }
+
+    public void setSettings(HashMap<String, String> settings) {
+        this.settings = settings;
+    }
+
+    public HashMap<String, Object> getPlgSettings() {
+        return plgSettings;
+    }
+
+    public void setPlgSettings(HashMap<String, Object> plgSettings) {
+        this.plgSettings = plgSettings;
     }
 
 }
