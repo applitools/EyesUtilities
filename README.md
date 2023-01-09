@@ -214,6 +214,7 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `$test.NewCount` - Total new steps in test
             + `$test.MatchedCount` - Total matching steps in test
             + `$test.MismatchedCount` - Total mismatching steps in test
+            + `$test.EnvironmentName` - The environment name defined for the test
             + `$test.getPlaybackAnimation` - Download & Generate the test flow as an animated gif and returns it's relative path.
             + `$test.getAccessibilityResult()` - Accessibility status results for test, blank string if no accessibility testing performed    
             + `$test.Env.hostingApp` - Browser used for test
@@ -221,6 +222,7 @@ Here is the partial list of parameters that are exposed for usage in template co
             + `$test.Env.getDisplaySizeStr()` - Viewport size for test
             + `$test.Env.deviceInfo` - Device name (Desktop or unique mobile device name)
             + `$test.Env.inferred` - Environment user agent string
+            
             + `#foreach($step in $test.FailedSteps)` - Iterate over each step in $test.FailedSteps
                 + `$step.Diff` - Download & Generate step diff image and returns file's relative path.
                 + `$step.AnimatedThumbprints` - Download & Generate step animated thumbprint and returns file's relative path.

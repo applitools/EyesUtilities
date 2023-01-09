@@ -63,6 +63,7 @@ public class TestInfo {
     private Integer revision;
     private Boolean isStarred;
     private String secretToken;
+    private String EnvironmentName;
     //endregion
 
     @JsonIgnore
@@ -235,7 +236,7 @@ public class TestInfo {
     }
 
     public List<FailedStep> getFailedSteps() {
-        LinkedList<FailedStep> failedSteps = new LinkedList();
+        LinkedList<FailedStep> failedSteps = new LinkedList<>();
         Result[] stepsResults = getStepsResults();
 
         for (int i = 0; i < stepsResults.length; ++i) {
@@ -254,7 +255,7 @@ public class TestInfo {
     }
 
     public List<Step> getSteps() {
-        LinkedList<Step> steps = new LinkedList();
+        LinkedList<Step> steps = new LinkedList<>();
         if (ExpectedAppOutput == null || ActualAppOutput == null) return steps;
 
         int count = Math.max(ExpectedAppOutput.size(), ActualAppOutput.size());
@@ -568,4 +569,13 @@ public class TestInfo {
         return "Passed";
     }
 
+    public String getEnvironmentName() {
+        HashMap<String, Object> startInfo = (HashMap<String, Object>) this.getStartInfo();
+
+        return startInfo.containsKey("environmentName") ? startInfo.get("environmentName").toString() : "";
+    }
+
+    public void setEnvironmentName(String environmentName) {
+        this.EnvironmentName = environmentName;
+    }
 }
