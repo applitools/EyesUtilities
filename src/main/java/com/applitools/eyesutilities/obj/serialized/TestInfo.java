@@ -563,7 +563,7 @@ public class TestInfo {
      */
     public String getAccessibilityResult() {
         for (ActualStepResult stepResult : ActualAppOutput) {
-            if (stepResult.getAccessibilityStatus() == null) return "";
+            if (stepResult == null || stepResult.getAccessibilityStatus() == null) return "";
             if (stepResult.getAccessibilityStatus().get("status").equals("Failed")) return "Failed";
         }
         return "Passed";
