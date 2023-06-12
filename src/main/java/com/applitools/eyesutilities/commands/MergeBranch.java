@@ -16,19 +16,20 @@ public class MergeBranch extends BaselineCommand {
     private boolean isDelete = false;
     @Parameter(names = {"-db", "-deleteBaselines"}, description = "Delete the baselines associated")
     private boolean isDeleteBaselines = false;
+    @Parameter(names = {"-gt", "-gitMergeTimestamp"}, description = "A non-null value instructs Eyes to use timestamp to index the baseline")
+    private String gitMergeTimestamp = null;
 
     @Override
     public void run() throws Exception {
-        System.out.printf("Attempting to merge source branch: %s to target branch: %s.%n", sourceBranch, targetBranch);
+        System.out.printf("Attempting to merge source branch: %s to target branch: %s.%n\n", sourceBranch, targetBranch);
+        if (gitMergeTimestamp != null) {
+            System.out.printf("\nUsing git merge timestamp %s to index baselines", gitMergeTimestamp);
+        }
         BranchesAPIContext context = BranchesAPIContext.Init(getFormattedServerUrl(), apiKey);
-        System.out.println("Before Baseline Manager");
         BaselinesManager baselinesManager = new BaselinesManager(context);
-        System.out.println("Before merge Branches");
         MergeBranchResponse response = baselinesManager.mergeBranches(this);
-        System.out.println("After merge Branches");
         if (!response.isMerged())
-            System.out.println("\nConflicts have been found!!! Merge aborted" +
-                    "\nPlease resolve conflicts through yanirta test-manager and try again");
+            System.out.println("\nConflicts have been found!!! Merge aborted.");
         else {
             System.out.println("\nMerge succeeded");
             if (isDelete && baselinesManager.deleteBranch(sourceBranch, isDeleteBaselines))
@@ -43,5 +44,9 @@ public class MergeBranch extends BaselineCommand {
 
     public String getTargetBranch() {
         return targetBranch;
+    }
+
+    public String getGitMergeTimestamp() {
+        return gitMergeTimestamp;
     }
 }

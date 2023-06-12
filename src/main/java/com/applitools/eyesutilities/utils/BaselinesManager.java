@@ -42,15 +42,12 @@ public class BaselinesManager {
     public MergeBranchResponse mergeBranches(MergeBranch mergeBranch) throws InterruptedException, IOException {
         MergeBranchResponse mergeBranchResponse = null;
         String url = context.getMergedUrl();
-        System.out.println("This is the url: " + url);
+        System.out.printf("\nURL: %s", url);
         String json = mapper.writeValueAsString(mergeBranch);
-        System.out.println("This is the json: " + json);
         StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
 
         try (CloseableHttpResponse response = ApiCallHandler.sendPostRequest(url, entity, context)) {
             String resp = EntityUtils.toString(response.getEntity(), "UTF-8");
-            System.out.println("Reading Value:");
-            System.out.println(resp);
             mergeBranchResponse = mapper.readValue(resp, MergeBranchResponse.class);
         }
         return mergeBranchResponse;

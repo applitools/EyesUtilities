@@ -318,6 +318,7 @@ Syntax:
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
     + `-d` - Delete the source branch after a successful merge. The apiKey must have merge, read and write permissions.
     + `-db` - After successfully merging baselines from source branch to target branch, delete baselines from source branch. 
+    + `-gt` - Use timestamp to index new baseline revision. Timestamp must be valid. (ex: `2023-05-25T05:18:34.956Z`)
 
 
 ### Copy baselines
