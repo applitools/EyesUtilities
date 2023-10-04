@@ -7,6 +7,6 @@ public abstract class BaselineCommand extends CommandBase {
     protected String apiKey;
 
     protected String getFormattedServerUrl() {
-        return server.replace("(http|https)://", "");
+        return server.replaceAll("(http|https)://", "");
     }
 }
