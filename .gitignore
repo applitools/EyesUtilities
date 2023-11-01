@@ -32,3 +32,4 @@ src/main/java/.DS_Store
 report.templ
 *.iml
 download**/*
+Report/
