@@ -36,6 +36,7 @@ else
   downloadPath=$downloadPath/$(date "+%Y-%m-%d/%H-%M-%S")
   echo "downloadPath: '$downloadPath'"
 fi
+mkdir -p $downloadPath
 
 if [[ -z $url ]]; then
   echo "URL is not provided."
@@ -44,8 +45,8 @@ fi
 
 function download() {
   echo "Downloading batch artifacts using command: '$1' from batch url: '$2' to: '$downloadPath/$1'"
-  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -k "APPLITOOLS_VIEW_KEY"  -d $downloadPath/{batch_name}/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext} $url"
-  java -jar jars/EyesUtilities_1.5.18.jar $1 -k $key  -d $downloadPath/{batch_name}/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext} $url
+  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -k "APPLITOOLS_VIEW_KEY"  -d $downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext} $url"
+  java -jar jars/EyesUtilities_1.5.18.jar $1 -k $key  -d $downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext} $url
 }
 
 function downloadReport() {
