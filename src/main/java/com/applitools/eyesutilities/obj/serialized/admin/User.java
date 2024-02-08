@@ -12,6 +12,8 @@ public class User {
     int numberOfSuccesfulLogins;
     HashMap<String, String> settings;
     HashMap<String, Object> plgSettings;
+    boolean mustShowConsent;
+    boolean isHidden;
 
     public User() {
     }
@@ -90,6 +92,18 @@ public class User {
 
     public void setPlgSettings(HashMap<String, Object> plgSettings) {
         this.plgSettings = plgSettings;
+    }
+
+    public boolean getMustShowConsent() { return mustShowConsent; }
+
+    public void setMustShowConsent(boolean mustShowConsent) {
+        this.mustShowConsent = mustShowConsent;
+    }
+
+    public boolean getIsHidden() { return isHidden; }
+
+    public void setIsHidden(boolean isHidden) {
+        this.isHidden = isHidden;
     }
 
 }
