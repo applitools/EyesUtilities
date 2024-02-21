@@ -33,3 +33,6 @@ report.templ
 *.iml
 download**/*
 Report/
+
+images/
+viettel/
