@@ -4,9 +4,9 @@ set -e
 
 if [ $# -eq 0 ]; then
     echo "No arguments provided. Usage:"
-    echo "    ./downloadArtifacts.sh <command> <Applitools batch url> <downloadPath> <APPLITOOLS_VIEW_KEY>"
+    echo "    ./downloadArtifacts.sh <command> <Applitools batch url> <downloadPath> <APPLITOOLS_VIEW_KEY> <APPLITOOLS_SERVER_URL>"
     echo "example:"
-    echo "    ./downloadArtifacts.sh [all|anidiffs|diffs|images|playback|report] <Applitools batch url> myDownloadDir <APPLITOOLS_VIEW_KEY>"
+    echo "    ./downloadArtifacts.sh [all|anidiffs|diffs|images|playback|report] <Applitools batch url> myDownloadDir <APPLITOOLS_VIEW_KEY> eyes.applitools.com"
     exit 1
 fi
 
@@ -14,6 +14,7 @@ downloadCommand=$1
 url=$2
 downloadPath=$3
 key=$4
+serverUrl=$5
 
 if [[ -z $downloadCommand ]]; then
   downloadCommand="all"
@@ -43,17 +44,22 @@ if [[ -z $url ]]; then
   exit 1
 fi
 
+if [[ -z $serverUrl ]]; then
+  echo "APPLITOOLS_SERVER_URL is not provided. Use default: eyes.applitools.com"
+  serverUrl="eyes.applitools.com"
+fi
+
 function download() {
   echo "Downloading batch artifacts using command: '$1' from batch url: '$2' to: '$downloadPath/$1'"
-  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -k "APPLITOOLS_VIEW_KEY"  -d $downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext} $url"
-  java -jar jars/EyesUtilities_1.5.18.jar $1 -k $key  -d $downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext} $url
+  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -as $serverUrl -k "APPLITOOLS_VIEW_KEY"  -d '$downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext}' $url"
+  java -jar jars/EyesUtilities_1.5.18.jar $1 -as $serverUrl -k $key  -d "$downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext}" $url
 }
 
 function downloadReport() {
   echo "Generating batch 'report' from batch url: '$2' to: '$downloadPath/$1'"
-  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -k "APPLITOOLS_VIEW_KEY" -d $downloadPath/$1/report.html $url"
+  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -as $serverUrl -k "APPLITOOLS_VIEW_KEY" -d '$downloadPath/$1/report.html' $url"
   mkdir -p $downloadPath/$1
-  java -jar jars/EyesUtilities_1.5.18.jar report -k $key -d "$downloadPath/$1/report.html" -rt "customName" $url
+  java -jar jars/EyesUtilities_1.5.18.jar report -as $serverUrl -k $key -d "$downloadPath/$1/report.html" -rt "customName" $url
 }
 
 function run() {
