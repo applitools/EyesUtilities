@@ -336,6 +336,7 @@ Syntax:
     + `-as [url]` - Applitools alternative server, default: eyes.applitools.com
     + `-s [sourceBranch]` - Source branch name  default: 'default' branch
     + `-an [appName]` - Filter baselines by application name
+    + `-li [limit]` - Maximum number of baselines to copy (default: no limit)
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
 ### Delete baselines

@@ -16,13 +16,15 @@ public class CopyBaseline extends BaselineCommand {
     private String targetBranch;
     @Parameter(names = {"-an", "-appName"}, description = "Filter baselines to copy by application name.")
     private String appName = "";
+    @Parameter(names = {"-li", "-limit"}, description = "An upper limit for the number of baselines to copy.")
+    private Integer limit;
 
     @Override
     public void run() throws Exception {
         System.out.printf("Attempting to copy baselines from source branch: %s to target branch: %s.%n", sourceBranch, targetBranch);
         BranchesAPIContext context = BranchesAPIContext.Init(getFormattedServerUrl(), apiKey);
         BaselinesManager baselinesManager = new BaselinesManager(context);
-        List<BaselineInfo> baselinesToCopy = baselinesManager.getBaselinesByBranch(sourceBranch);
+        List<BaselineInfo> baselinesToCopy = baselinesManager.getBaselinesByBranch(sourceBranch, limit);
         if (!appName.isEmpty()) {
             System.out.printf("Filtering by app name: %s.%n", appName);
             baselinesToCopy = baselinesManager.filterBaselinesByAppName(baselinesToCopy, appName);

@@ -62,7 +62,7 @@ public class BaselinesManager {
         final String json = mapper.writeValueAsString(bi);
         final StringEntity entity = new StringEntity(json, ContentType.APPLICATION_JSON);
 
-        final List<String> baselineIds = getBaselinesByBranch(bi.getName())
+        final List<String> baselineIds = getBaselinesByBranch(bi.getName(), null)
                 .stream()
                 .map(BaselineInfo::getId)
                 .collect(Collectors.toList());
@@ -82,16 +82,17 @@ public class BaselinesManager {
         return false;
     }
 
-    public List<BaselineInfo> getBaselinesByBranch(final String branchName) throws IOException, InterruptedException {
+    public List<BaselineInfo> getBaselinesByBranch(final String branchName, final Integer limit) throws IOException, InterruptedException {
         List<BaselineInfo> baselines = new ArrayList<>();
         BranchInfo bi = getBranchInfoByName(branchName);
         if (bi == null) return baselines;
         String url = context.getBaselinesUrl();
 
         ObjectNode branch = mapper.createObjectNode();
-        branch.put("limit", 1000);
+
+        branch.put("limit", limit != null ? limit : -1);
         branch.put("branchId", bi.getId());
-        
+
         //StringEntity stringEntity = new StringEntity(entity.toString(), ContentType.APPLICATION_JSON);
         StringEntity stringEntity = new StringEntity(mapper.writeValueAsString(branch), ContentType.APPLICATION_JSON);
 
