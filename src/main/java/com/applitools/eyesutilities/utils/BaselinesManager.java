@@ -135,12 +135,12 @@ public class BaselinesManager {
         copyBaselines.put("sourceBranch", sourceBranch);
         copyBaselines.put("targetBranch", targetBranch);
 
-        //ArrayNode baselinesIds = mapper.createArrayNode();
-        ArrayNode baselinesIds = copyBaselines.putArray("baselineIds");
-
-        baselines.forEach(baseline -> {
-            baselinesIds.add(baseline.getId());
-        });
+//        ArrayNode baselinesIds = mapper.createArrayNode();
+//        ArrayNode baselinesIds = copyBaselines.putArray("baselineIds");
+//
+//        baselines.forEach(baseline -> {
+//            baselinesIds.add(baseline.getId());
+//        });
 
         return new StringEntity(mapper.writeValueAsString(copyBaselines), ContentType.APPLICATION_JSON);
     }
