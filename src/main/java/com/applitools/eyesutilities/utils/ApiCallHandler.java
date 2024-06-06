@@ -15,7 +15,7 @@ import java.net.ProxySelector;
 
 public abstract class ApiCallHandler {
     private static final long INTERVAL_MULTIPLIER = 2;
-    private static final int POLLING_RETRIES = 10;
+    private static final int POLLING_RETRIES = 100;
     private static final String LOCATION_HEADER = "Location";
 
     private static final SystemDefaultRoutePlanner routePlanner = new SystemDefaultRoutePlanner(ProxySelector.getDefault());
@@ -79,6 +79,7 @@ public abstract class ApiCallHandler {
         Thread.sleep(interval);
 
         while (retry > 0) {
+            System.out.println("Waiting for response - retry # " + (POLLING_RETRIES - retry + 1) + " for request " + req.getRequestLine());
             Thread.sleep(interval);
             try (CloseableHttpResponse response = sendRequest(req)) {
                 if (response.getStatusLine().getStatusCode() == HttpStatus.SC_CREATED)
