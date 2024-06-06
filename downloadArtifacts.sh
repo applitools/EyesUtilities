@@ -51,15 +51,15 @@ fi
 
 function download() {
   echo "Downloading batch artifacts using command: '$1' from batch url: '$2' to: '$downloadPath/$1'"
-  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -as $serverUrl -k "APPLITOOLS_VIEW_KEY"  -d '$downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext}' $url"
-  java -jar jars/EyesUtilities_1.5.18.jar $1 -as $serverUrl -k $key  -d "$downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext}" $url
+  echo "java -jar jars/EyesUtilities_1.6.1.jar $1 -as $serverUrl -k "APPLITOOLS_VIEW_KEY"  -d '$downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext}' $url"
+  java -jar jars/EyesUtilities_1.6.1.jar $1 -as $serverUrl -k $key  -d "$downloadPath/$1/{test_id}-{test_name}/file:{step_index}{step_tag}{artifact_type}.{file_ext}" $url
 }
 
 function downloadReport() {
   echo "Generating batch 'report' from batch url: '$2' to: '$downloadPath/$1'"
-  echo "java -jar jars/EyesUtilities_1.5.18.jar $1 -as $serverUrl -k "APPLITOOLS_VIEW_KEY" -d '$downloadPath/$1/report.html' $url"
+  echo "java -jar jars/EyesUtilities_1.6.1.jar $1 -as $serverUrl -k "APPLITOOLS_VIEW_KEY" -d '$downloadPath/$1/report.html' $url"
   mkdir -p $downloadPath/$1
-  java -jar jars/EyesUtilities_1.5.18.jar report -as $serverUrl -k $key -d "$downloadPath/$1/report.html" -rt "customName" $url
+  java -jar jars/EyesUtilities_1.6.1.jar report -as $serverUrl -k $key -d "$downloadPath/$1/report.html" -rt "customName" $url
 }
 
 function run() {
