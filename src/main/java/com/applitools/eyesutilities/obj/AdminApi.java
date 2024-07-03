@@ -72,7 +72,7 @@ public class AdminApi {
         String accounts = constructUrl(ACCOUNTS_API, orgId_, "");
         CloseableHttpResponse response = post(accounts, account);
         try {
-            InputStream content = post(accounts, account).getEntity().getContent();
+            InputStream content = response.getEntity().getContent();
             return mapper.readValue(content, Account.class);
         } finally {
             response.close();
