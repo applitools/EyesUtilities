@@ -27,6 +27,7 @@ public class ActualStepResult {
     private String knownVariantId;
     private HashMap expectedImage;
     private Object activeExpectedMismatchRegions;
+    private Boolean hasDynamicDiffs;
 
     public HashMap getExpectedImage() {
         return expectedImage;
@@ -200,4 +201,7 @@ public class ActualStepResult {
         this.activeExpectedMismatchRegions = activeExpectedMismatchRegions;
     }
 
+    public Boolean getHasDynamicDiffs() { return hasDynamicDiffs; }
+
+    public void setHasDynamicDiffs(Boolean hasDynamicDiffs) { this.hasDynamicDiffs = hasDynamicDiffs; }
 }
