@@ -29,3 +29,10 @@ src/main/java/.DS_Store
 .classpath
 .project
 .settings/**
+report.templ
+*.iml
+download**/*
+Report/
+
+images/
+viettel/
