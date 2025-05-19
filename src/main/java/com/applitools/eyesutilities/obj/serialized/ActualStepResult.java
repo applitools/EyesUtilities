@@ -28,6 +28,7 @@ public class ActualStepResult {
     private HashMap expectedImage;
     private Object activeExpectedMismatchRegions;
     private Boolean hasDynamicDiffs;
+    private Object domChangedSelectorMapping;
 
     public HashMap getExpectedImage() {
         return expectedImage;
@@ -204,4 +205,12 @@ public class ActualStepResult {
     public Boolean getHasDynamicDiffs() { return hasDynamicDiffs; }
 
     public void setHasDynamicDiffs(Boolean hasDynamicDiffs) { this.hasDynamicDiffs = hasDynamicDiffs; }
+
+    public Object getDomChangedSelectorMapping() {
+        return domChangedSelectorMapping;
+    }
+
+    public void setDomChangedSelectorMapping(Object domChangedSelectorMapping) {
+        this.domChangedSelectorMapping = domChangedSelectorMapping;
+    }
 }
