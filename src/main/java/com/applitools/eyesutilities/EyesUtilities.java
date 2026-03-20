@@ -17,7 +17,7 @@ import com.beust.jcommander.Parameters;
 
 @Parameters(commandDescription = "A 'swiss knife' made to get advanced functionality out of Applitools API")
 public class EyesUtilities {
-    private static final String cur_ver = EyesUtilities.class.getPackage().getImplementationVersion();
+    private static final String cur_ver = "1.6.6";
     private Parse parser = new Parse();
     private DownloadDiffs downloadDiffs = new DownloadDiffs();
     private DownloadImages downloadImages = new DownloadImages();
