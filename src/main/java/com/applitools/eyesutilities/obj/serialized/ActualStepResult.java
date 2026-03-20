@@ -1,10 +1,13 @@
 package com.applitools.eyesutilities.obj.serialized;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.HashMap;
 
 /**
  * Created by yanir on 10/04/2017.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ActualStepResult {
     private HashMap Image;
     private HashMap Thumbprint;
@@ -30,6 +33,15 @@ public class ActualStepResult {
     private Boolean hasDynamicDiffs;
     private Object domChangedSelectorMapping;
     private Boolean hasMatchRegionsDefined;
+    private String diffDescriptionsCount;
+
+    public String getDiffDescriptionsCount() {
+        return diffDescriptionsCount;
+    }
+
+    public void setDiffDescriptionsCount(String diffDescriptionsCount) {
+        this.diffDescriptionsCount = diffDescriptionsCount;
+    }
 
     public HashMap getExpectedImage() {
         return expectedImage;
