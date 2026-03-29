@@ -24,16 +24,16 @@
             <scope>test</scope>
         </dependency>
 
-		<!-- TODO : The Apache HttpComponents Project has deprecated HttpClient 4.x 
+		<!-- TODO : The Apache HttpComponents Project has deprecated HttpClient 4.x
 				"Users of HttpCore 4.x are strongly encouraged to migrate to HttpCore 5.x"
 				https://hc.apache.org/status.html -->
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.14</version>
         </dependency>
-        <!-- 
-        	Migration guide https://hc.apache.org/httpcomponents-client-5.2.x/migration-guide/preparation.html 
+        <!--
+        	Migration guide https://hc.apache.org/httpcomponents-client-5.2.x/migration-guide/preparation.html
 
 		<dependency>
 		    <groupId>org.apache.httpcomponents.client5</groupId>
@@ -95,7 +95,7 @@
             <plugin>
                 <groupId>org.owasp</groupId>
                 <artifactId>dependency-check-maven</artifactId>
-                <version>7.1.1</version>
+                <version>8.3.1</version>
                 <executions>
                     <execution>
                         <goals>
@@ -105,11 +105,11 @@
                 </executions>
             </plugin>
 
-            <!-- Use lifecucle package to generate uber jar -->
+            <!-- Use lifecycle package to generate uber jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.4.1</version>
+                <version>3.5.0</version>
                 <configuration>
                     <transformers>
                         <transformer
@@ -132,7 +132,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
-                <version>3.2.2</version>
+                <version>3.3.0</version>
                 <configuration>
                     <archive>
                         <manifest>
