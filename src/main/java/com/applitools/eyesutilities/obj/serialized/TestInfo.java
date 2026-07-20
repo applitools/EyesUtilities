@@ -481,14 +481,14 @@ public class TestInfo {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("test_id", getId());
         params.put("batch_id", getBatchId());
-        params.put("test_name", getScenarioName());
-        params.put("batch_name", getBatchName());
-        params.put("app_name", getAppName());
-        params.put("branch_name", getBranchName());
-        params.put("os", getEnv().getOs());
-        params.put("hostapp", getEnv().getHostingApp());
-        params.put("viewport", getEnv().getDisplaySizeStr());
-        params.put("device_info", getEnv().getDeviceInfo());
+        params.put("test_name", Utils.toFolderName(getScenarioName()));
+        params.put("batch_name", Utils.toFolderName(getBatchName()));
+        params.put("app_name", Utils.toFolderName(getAppName()));
+        params.put("branch_name", Utils.toFolderName(getBranchName()));
+        params.put("os", Utils.toFolderName(getEnv().getOs()));
+        params.put("hostapp", Utils.toFolderName(getEnv().getHostingApp()));
+        params.put("viewport", Utils.toFolderName(getEnv().getDisplaySizeStr()));
+        params.put("device_info", Utils.toFolderName(getEnv().getDeviceInfo()));
         this.pathBuilder = pathBuilder.recreate(params);
     }
     //endregion

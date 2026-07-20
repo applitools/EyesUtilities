@@ -4,6 +4,7 @@ import com.applitools.eyesutilities.obj.PathBuilder;
 import com.applitools.eyesutilities.obj.Result;
 import com.applitools.eyesutilities.obj.Status;
 import com.applitools.eyesutilities.obj.contexts.ResultsAPIContext;
+import com.applitools.eyesutilities.utils.Utils;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -110,7 +111,7 @@ public class BatchInfo {
     public void setPathBuilder(PathBuilder pathBuilder) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("batch_id", batchId);
-        params.put("batch_name", getName());
+        params.put("batch_name", Utils.toFolderName(getName()));
         this.pathBuilder = pathBuilder.recreate(params);
         for (TestInfo ti : tests) ti.setPathBuilder(this.pathBuilder);
     }
