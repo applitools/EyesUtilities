@@ -84,6 +84,7 @@ public abstract class Utils {
     }
 
     public static String toFolderName(String name) {
+        if (name == null) return null;
         return name.replaceAll("https?:", "")
                 .replaceAll("www\\.", "")
                 .replaceAll("[<>:\"/\\\\|?*]", "-")
