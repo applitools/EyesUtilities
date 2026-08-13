@@ -5,6 +5,7 @@ import com.applitools.eyesutilities.obj.Result;
 import com.applitools.eyesutilities.obj.Status;
 import com.applitools.eyesutilities.obj.contexts.ResultsAPIContext;
 import com.applitools.eyesutilities.utils.Utils;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,7 +41,9 @@ public class BatchInfo {
     private String url;
 
     //JSON Ignored
+    @JsonIgnore
     private PathBuilder pathBuilder;
+    @JsonIgnore
     private ResultsAPIContext context;
     private Result batchResult = Result.Matched;
 
@@ -108,6 +111,7 @@ public class BatchInfo {
         this.url = url;
     }
 
+    @JsonIgnore
     public void setPathBuilder(PathBuilder pathBuilder) {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("batch_id", batchId);
@@ -116,6 +120,7 @@ public class BatchInfo {
         for (TestInfo ti : tests) ti.setPathBuilder(this.pathBuilder);
     }
 
+    @JsonIgnore
     public void setContext(ResultsAPIContext context) {
         this.context = context;
         for (TestInfo ti : tests) ti.setContext(context);

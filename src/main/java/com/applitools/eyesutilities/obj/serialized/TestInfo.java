@@ -19,6 +19,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class TestInfo {
     private static final String PLAYBACK_FILENAME = "test_playback.gif";
+    private static final String UNKNOWN_STATUS = "Unknown";
 
     //region Fields
     private String Id;
@@ -84,6 +85,24 @@ public class TestInfo {
 
     public Status getStatus() {
         return Status;
+    }
+
+    /**
+     * The status a test should be filtered/bundled by. A test that was aborted is reported by the api
+     * with a status of it's own or with the isAborted indication, both are normalized to Aborted here.
+     *
+     * @return the resolved status, null when the api didn't report any.
+     */
+    @JsonIgnore
+    public com.applitools.eyesutilities.obj.Status getEffectiveStatus() {
+        if (Boolean.TRUE.equals(isAborted)) return com.applitools.eyesutilities.obj.Status.Aborted;
+        return Status;
+    }
+
+    @JsonIgnore
+    public String getEffectiveStatusName() {
+        com.applitools.eyesutilities.obj.Status status = getEffectiveStatus();
+        return status == null ? UNKNOWN_STATUS : status.name();
     }
 
     public String getBaselineEnvId() {
@@ -482,6 +501,7 @@ public class TestInfo {
         params.put("test_id", getId());
         params.put("batch_id", getBatchId());
         params.put("test_name", Utils.toFolderName(getScenarioName()));
+        params.put("test_status", getEffectiveStatusName());
         params.put("batch_name", Utils.toFolderName(getBatchName()));
         params.put("app_name", Utils.toFolderName(getAppName()));
         params.put("branch_name", Utils.toFolderName(getBranchName()));
