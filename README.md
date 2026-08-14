@@ -86,6 +86,7 @@ Syntax:
 
 ### Download test images
 Downloads the baseline and the actual images of a test.
+When the provided url points to a batch rather than to a single test, the images of every test in the batch are downloaded.
 
 Syntax:
 > java -jar EyesUtilities.jar images -k [EntKey] <[optional params]> [ResultUrl]
@@ -96,12 +97,34 @@ Syntax:
 + Optional parameters:
     + `-a` - Flag to download only actuals
     + `-b` - Flag to download only baselines
+    + `-st [statuses]` - Download only the tests with the given statuses, SemiColon(;) separated. e.g. `Failed;Unresolved`. Available statuses: Passed, Failed, Unresolved, Running, Aborted (case insensitive).
+    + `-gs` - Flag to bundle the images into a folder per test status, without filtering out any test.
     + `-d [pathTmpl]` - Specify destination path template.
     + `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
   default:
   >{workdir_root}/Artifacts/{batch_id}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
-  + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
+  + Available path template parameters: user_root, workdir_root, batch_id, test_id, test_name, test_status, batch_name, app_name, os, hostapp, viewport, branch_name, step_index, step_tag, artifact_type, file_ext
+
+#### Download batch images by test status
+Using `-st` and/or `-gs`, the baseline and the checkpoint images of a batch are bundled into a folder per test status:
+  >{workdir_root}/Artifacts/{batch_id}/{test_status}/{test_id}/file:{step_index}_{step_tag}_{artifact_type}.{file_ext}
+
+For example, downloading the images of every unresolved and failed test in a batch:
+> java -jar EyesUtilities.jar images -k [EntKey] -st "Failed;Unresolved" https://eyes.applitools.com/app/batches/[BatchId]/
+
+Which results in:
+```
+Artifacts/[BatchId]/Failed/[TestId]/1_[step_tag]_baseline.png
+Artifacts/[BatchId]/Failed/[TestId]/1_[step_tag]_actual.png
+Artifacts/[BatchId]/Unresolved/[TestId]/1_[step_tag]_baseline.png
+Artifacts/[BatchId]/Unresolved/[TestId]/1_[step_tag]_actual.png
+```
+
+Notes:
++ `-st` implies `-gs`, tests that were filtered out are reported as skipped and are not downloaded.
++ A test reported as aborted is bundled under `Aborted`, a test the server reported no status for is bundled under `Unknown`.
++ A destination given with `-d` always wins over the status based default. To bundle by status with a template of your own, place the `{test_status}` parameter in it.
 
 ### Generating batch reports
 This command will generate an offline report for one or more Applitools' results urls,
