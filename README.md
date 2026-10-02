@@ -16,6 +16,7 @@ As a result every cli call should start with:
 >Java -jar EyesUtilities.jar \[command] \[command specific parameters...]
 
 ## Appendix
+* [Graphical interface (GUI)](#graphical-interface-gui)
 * [Generate steps animation](#generate-steps-animation)
 * [Generate test playback](#generate-test-playback)
 * [Download test diffs](#download-test-diffs)
@@ -27,6 +28,23 @@ As a result every cli call should start with:
 * [Delete baselines](#delete-baselines)
 * [Proxy server settings](#proxy-server-settings)
 * [Resources](#resources)
+
+### Graphical interface (GUI)
+Every command below can also be run from a local web GUI:
+>java -jar EyesUtilities.jar --gui
+
+`--gui` must be the only argument. It starts a server on `127.0.0.1` (random port, per-launch access token) and opens
+your default browser. Pick a utility from the **Utility** dropdown: its required parameters appear on the left, and
+**⚙ Options** lists every optional flag with an example value. Output streams into the panel on the right.
+
+* Downloaded files go to `Downloads/EyesUtilities` (relative destinations resolve there too).
+* Enter your API key with the **🔑 Enter API key** button at the top of the window (used by branch, baseline and admin
+  utilities); download utilities take a view key in the Setup panel. Keys are kept in the open page only — never written
+  to disk or shown in the process list, and masked in the log — so re-enter them after a reload.
+* Removing a user from a whole organization asks for interactive confirmation, so it stays CLI-only — the GUI requires a team id.
+
+Building from source compiles the GUI too (Maven installs its own Node). To iterate on Java only, add
+`-Dskip.installnodenpm=true -Dskip.npm=true`; for the frontend, run `npm test` / `npm run build` in `gui/`.
 
 ### Generate steps animation
 This command will generate a set of animated gifs for each failing step inside the provided test.

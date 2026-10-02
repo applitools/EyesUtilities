@@ -105,6 +105,59 @@
                 </executions>
             </plugin>
 
+            <!-- GUI (gui/): installs its own Node, builds the React bundle into gui/dist.
+                 Iterate on Java alone with -Dskip.installnodenpm=true -Dskip.npm=true. -->
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.15.0</version>
+                <configuration>
+                    <workingDirectory>gui</workingDirectory>
+                    <installDirectory>${project.build.directory}</installDirectory>
+                    <nodeVersion>v20.12.2</nodeVersion>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install-node-and-npm</id>
+                        <goals><goal>install-node-and-npm</goal></goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                    <execution>
+                        <id>npm-ci</id>
+                        <goals><goal>npm</goal></goals>
+                        <phase>generate-resources</phase>
+                        <configuration><arguments>ci</arguments></configuration>
+                    </execution>
+                    <execution>
+                        <id>npm-run-build</id>
+                        <goals><goal>npm</goal></goals>
+                        <phase>generate-resources</phase>
+                        <configuration><arguments>run build</arguments></configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- Serves the built bundle from the jar at /web (see gui.GuiServer). -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.3.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-gui-bundle</id>
+                        <phase>process-resources</phase>
+                        <goals><goal>copy-resources</goal></goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${project.build.outputDirectory}/web</outputDirectory>
+                            <resources>
+                                <resource><directory>${project.basedir}/gui/dist</directory></resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
             <!-- Use lifecucle package to generate uber jar -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
