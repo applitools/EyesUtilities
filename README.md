@@ -46,6 +46,12 @@ your default browser. Pick a utility from the **Utility** dropdown: its required
 Building from source compiles the GUI too (Maven installs its own Node). To iterate on Java only, add
 `-Dskip.installnodenpm=true -Dskip.npm=true`; for the frontend, run `npm test` / `npm run build` in `gui/`.
 
+To build a GUI installer for the current OS (needs JDK 17+ for `jpackage`):
+>mvn -Pgui-installers -DskipTests clean verify
+
+The output is `target/installers/EyesUtilities-<version>.msi` on Windows, `.dmg` on macOS (for the build machine's
+architecture) or `.deb` on Linux. jpackage can't cross-build, so build each installer on its own OS.
+
 ### Generate steps animation
 This command will generate a set of animated gifs for each failing step inside the provided test.
 The animation will iterate between three states: (a) The expected from the baseline, (b) The actual and (c) The actual with purple diff marks.

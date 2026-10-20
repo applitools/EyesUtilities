@@ -198,4 +198,190 @@
 
         </plugins>
     </build>
+
+    <profiles>
+        <!--
+            gui-installers: builds an installer for the host OS with jpackage that opens the GUI.
+            Needs JDK 17+ (jpackage); the app still compiles for Java 8.
+            Run with: mvn -Pgui-installers -DskipTests clean verify
+            Output: target/installers/EyesUtilities-*.{msi|dmg|deb}
+            The installer-os-* profiles below auto-activate on the host and set the type and icon.
+        -->
+        <profile>
+            <id>gui-installers</id>
+            <properties>
+                <!-- The OWASP check is bound to verify; installer builds don't need it. -->
+                <dependency-check.skip>true</dependency-check.skip>
+                <installer.input.jar>EyesUtilities_${project.version}.jar</installer.input.jar>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>stage-installer-input</id>
+                                <phase>pre-integration-test</phase>
+                                <goals><goal>copy-resources</goal></goals>
+                                <configuration>
+                                    <outputDirectory>${project.build.directory}/installer-input</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.basedir}/jars</directory>
+                                            <includes>
+                                                <include>${installer.input.jar}</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>run-jpackage</id>
+                                <phase>verify</phase>
+                                <goals><goal>exec</goal></goals>
+                                <configuration>
+                                    <executable>jpackage</executable>
+                                    <arguments>
+                                        <argument>--input</argument>
+                                        <argument>${project.build.directory}/installer-input</argument>
+                                        <argument>--type</argument>
+                                        <argument>${installer.type}</argument>
+                                        <argument>--name</argument>
+                                        <argument>EyesUtilities</argument>
+                                        <argument>--main-jar</argument>
+                                        <argument>${installer.input.jar}</argument>
+                                        <argument>--main-class</argument>
+                                        <argument>com.applitools.eyesutilities.EyesUtilities</argument>
+                                        <argument>--arguments</argument>
+                                        <argument>--gui</argument>
+                                        <!-- jpackage's default jlink options include strip-native-commands,
+                                             but the GUI runs each utility in a child JVM from
+                                             ${java.home}/bin/java (gui.UtilityProcess), so keep the launchers. -->
+                                        <argument>--jlink-options</argument>
+                                        <argument>--strip-debug --no-man-pages --no-header-files</argument>
+                                        <argument>--app-version</argument>
+                                        <argument>${project.version}</argument>
+                                        <argument>--description</argument>
+                                        <argument>Reports, downloads and baseline tools for Applitools Eyes</argument>
+                                        <argument>--copyright</argument>
+                                        <argument>Copyright © Applitools</argument>
+                                        <argument>--vendor</argument>
+                                        <argument>Applitools</argument>
+                                        <argument>--dest</argument>
+                                        <argument>${project.build.directory}/installers</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+        <!--
+            OS-detection sub-profiles for gui-installers: each auto-activates on its host and sets
+            ${installer.type} plus OS-specific jpackage flags. Only consumed when -Pgui-installers
+            is also active; harmless properties otherwise.
+        -->
+        <profile>
+            <id>installer-os-windows</id>
+            <activation><os><family>windows</family></os></activation>
+            <properties>
+                <!-- msi, not exe: jpackage's exe wrapper has no supportedOS manifest, so Windows
+                     reports "This program might not have installed correctly" after a good install. -->
+                <installer.type>msi</installer.type>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>run-jpackage</id>
+                                <configuration>
+                                    <arguments combine.children="append">
+                                        <argument>--win-menu</argument>
+                                        <argument>--win-shortcut</argument>
+                                        <argument>--win-dir-chooser</argument>
+                                        <!-- Fixed UpgradeCode so a new MSI replaces the previous install
+                                             instead of adding a second entry. Must never change. -->
+                                        <argument>--win-upgrade-uuid</argument>
+                                        <argument>85d8963a-fa24-4481-bac5-25550c57c380</argument>
+                                        <argument>--icon</argument>
+                                        <argument>${project.basedir}/installer/icons/EyesUtilities.ico</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <!-- jpackage builds for the JDK's own architecture: run on an Apple Silicon host
+                 for an arm64 dmg and on an Intel host for an x64 one. -->
+            <id>installer-os-mac</id>
+            <activation><os><family>mac</family></os></activation>
+            <properties>
+                <installer.type>dmg</installer.type>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>run-jpackage</id>
+                                <configuration>
+                                    <arguments combine.children="append">
+                                        <argument>--icon</argument>
+                                        <argument>${project.basedir}/installer/icons/EyesUtilities.icns</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>installer-os-linux</id>
+            <activation><os><family>unix</family><name>linux</name></os></activation>
+            <properties>
+                <installer.type>deb</installer.type>
+            </properties>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <executions>
+                            <execution>
+                                <id>run-jpackage</id>
+                                <configuration>
+                                    <arguments combine.children="append">
+                                        <argument>--icon</argument>
+                                        <argument>${project.basedir}/installer/icons/EyesUtilities.png</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
