@@ -21,6 +21,7 @@ src/test/java/Private
 TestData/Private
 
 *.html
+!/gui/index.html
 .DS_Store
 .idea
 .idea/.DS_Store
@@ -29,3 +30,8 @@ src/main/java/.DS_Store
 .classpath
 .project
 .settings/**
+
+# GUI build output and dependencies
+gui/node_modules/
+gui/dist/
+gui/*.tsbuildinfo
