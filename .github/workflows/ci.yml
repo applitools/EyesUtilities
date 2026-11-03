@@ -1,0 +1,136 @@
+name: CI
+
+permissions:
+  contents: read
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  pii-guard:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Scan tracked files for customer data
+        run: bash .githooks/pii-guard.sh --all
+
+  unit-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v4
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: maven
+
+      # generate-resources also builds the GUI bundle (frontend-maven-plugin), so a
+      # broken TypeScript build fails here too.
+      - name: Run unit tests
+        run: mvn test --batch-mode --fail-at-end
+
+  gui-tests:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gui
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: gui/package-lock.json
+
+      - run: npm ci
+
+      - name: Run GUI tests
+        run: npm test
+
+  jar-smoke:
+    runs-on: ubuntu-latest
+    needs: unit-tests
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v4
+        with:
+          distribution: temurin
+          java-version: 11
+          cache: maven
+
+      - name: Package shaded jar
+        shell: bash
+        run: mvn -DskipTests package --batch-mode
+
+      # Runs the real shaded jar on no-network paths so shading/classpath or
+      # GUI-bundling breakage fails CI without needing an Applitools API key.
+      - name: Smoke-test the packaged jar
+        shell: bash
+        run: |
+          VER=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout)
+          JAR=jars/EyesUtilities_${VER}.jar
+          echo "Smoking $JAR"
+
+          # No command: prints usage listing every utility (exit code is always 0 here)
+          java -jar "$JAR" | tee usage.txt
+          for cmd in parse diffs images report merge copyBaselines deleteBaselines anidiffs playback admin; do
+            grep -q "$cmd" usage.txt || { echo "::error::usage is missing '$cmd'"; exit 1; }
+          done
+
+          # --gui combined with other args must be rejected with the usage-error code
+          set +e
+          java -jar "$JAR" --gui extra
+          rc=$?
+          set -e
+          if [ "$rc" -ne 2 ]; then
+            echo "::error::'--gui extra' should exit 2, got $rc"
+            exit 1
+          fi
+
+          # The React bundle must be shaded into the jar for GuiServer to serve it
+          unzip -l "$JAR" | grep -q ' web/index.html$' || { echo "::error::web/index.html missing from jar"; exit 1; }
+
+  gui-installers:
+    needs: unit-tests
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+
+      # jpackage needs JDK 17+; the app itself still targets Java 8
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build installer
+        # bash on every OS so -P/-D flags parse the same everywhere (pwsh splits -Dx.y=z at the dot).
+        # The gui-installers profile already skips the OWASP check bound to verify.
+        shell: bash
+        run: mvn -Pgui-installers -DskipTests clean verify --batch-mode
+
+      - name: Upload installer
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: eyesutilities-installer-${{ matrix.os }}
+          path: target/installers/*
+          if-no-files-found: error
