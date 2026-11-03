@@ -5,7 +5,8 @@ permissions:
 
 on:
   push:
-    branches: [main]
+    # TODO: drop feature/adding-workflows once this workflow is merged to main
+    branches: [main, feature/adding-workflows]
   pull_request:
     branches: [main]
   workflow_dispatch:
