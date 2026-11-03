@@ -6,6 +6,9 @@ permissions:
 on:
   push:
     tags: ['v*']
+    # TODO: drop this once the workflow is merged to main. Branch pushes are
+    # dry runs: the release job only runs for tags.
+    branches: [feature/adding-workflows]
   workflow_dispatch: # dry run: builds artifacts, never creates a release
 
 concurrency:
