@@ -86,9 +86,10 @@ jobs:
           JAR=jars/EyesUtilities_${VER}.jar
           echo "Smoking $JAR"
 
-          # No command: prints usage listing every utility (exit code is always 0 here)
+          # No command: prints usage listing every utility (exit code is always 0 here).
+          # 'parse' is registered but hidden (@Parameters(hidden = true)), so usage omits it.
           java -jar "$JAR" | tee usage.txt
-          for cmd in parse diffs images report merge copyBaselines deleteBaselines anidiffs playback admin; do
+          for cmd in diffs images report merge copyBaselines deleteBaselines anidiffs playback admin; do
             grep -q "$cmd" usage.txt || { echo "::error::usage is missing '$cmd'"; exit 1; }
           done
 
