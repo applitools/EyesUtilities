@@ -1,0 +1,76 @@
+version: 2
+updates:
+  - package-ecosystem: maven
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 10
+    groups:
+      # databind/annotations/core are pinned separately and must move together.
+      jackson:
+        patterns: ["com.fasterxml.jackson*"]
+      # velocity-engine-core and velocity-tools-generic are released in step.
+      velocity:
+        patterns: ["org.apache.velocity*"]
+    ignore:
+      # JUnit 5 is a rewrite of the test framework, not a bump.
+      - dependency-name: "junit:junit"
+        update-types: ["version-update:semver-major"]
+      # okhttp 5 is a breaking API change, and the pom already trims its Kotlin
+      # stdlib, so a jump can break the shaded jar.
+      - dependency-name: "com.squareup.okhttp3:okhttp"
+        update-types: ["version-update:semver-major"]
+      # dependency-check 8+ needs an NVD API key and a long first data download;
+      # moving off 7.x is deliberate work, not a Monday PR.
+      - dependency-name: "org.owasp:dependency-check-maven"
+        update-types: ["version-update:semver-major"]
+      # Velocity majors change the template engine the report command relies on.
+      - dependency-name: "org.apache.velocity*"
+        update-types: ["version-update:semver-major"]
+      # Note: HttpClient 4 -> 5 is a different artifact (httpclient5), so
+      # Dependabot never proposes it; that migration stays manual (see pom TODO).
+
+  - package-ecosystem: npm
+    directory: "/gui"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Etc/UTC
+    open-pull-requests-limit: 10
+    groups:
+      # Build and test tooling: one PR a week instead of a dozen.
+      gui-dev-tooling:
+        dependency-type: development
+        update-types: ["minor", "patch"]
+    ignore:
+      # These majors are planned migrations, not routine bumps.
+      - dependency-name: "react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "react-dom"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "@types/react-dom"
+        update-types: ["version-update:semver-major"]
+      # Tailwind 4 replaces the JS config with CSS-based config.
+      - dependency-name: "tailwindcss"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vite"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "vitest"
+        update-types: ["version-update:semver-major"]
+      # @types/node tracks the Node runtime (v20 in the pom and CI); bump with it.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
+
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: Etc/UTC

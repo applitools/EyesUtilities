@@ -1,0 +1,7 @@
+# Binary files approved for this public repository.
+# .githooks/pii-guard.sh (pre-commit + CI) rejects any tracked binary not
+# listed here. Before adding a file: open it, including every embedded image,
+# and confirm it contains no customer data. Sanitize first if in doubt.
+gui/src/assets/applitools-logo.png
+installer/icons/EyesUtilities.ico
+installer/icons/EyesUtilities.png

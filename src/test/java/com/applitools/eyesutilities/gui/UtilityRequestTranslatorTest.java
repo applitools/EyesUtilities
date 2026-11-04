@@ -142,7 +142,7 @@ public class UtilityRequestTranslatorTest {
     @Test
     public void shouldRequireTeamIdForRemoveUserSoItNeverPromptsForOrgWideRemoval() {
         assertThrows(InvalidRequestException.class,
-                () -> args(UtilityCommand.ADMIN_REMOVE_USER, req(values("or", "org1", "ri", "a@b.com"))));
+                () -> args(UtilityCommand.ADMIN_REMOVE_USER, req(values("or", "org1", "ri", "user@example.com"))));
     }
 
     @Test
