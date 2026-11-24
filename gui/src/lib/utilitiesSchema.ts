@@ -208,6 +208,16 @@ export const UTILITIES: UtilitySpec[] = [
     ],
     optional: [],
   },
+  {
+    id: "admin.setViewer", label: "Set view-only", group: "admin", keyKind: "api", acceptsResultUrls: false,
+    description: "Make an existing team member view-only. Setting every member to view-only (-all) asks for confirmation, so it is CLI-only.",
+    required: [
+      ORG_ID,
+      TEAM_ID,
+      { flag: "un", label: "Username", type: "text", help: "The member's username, as shown by Get users.", example: "jane.doe@example.com" },
+    ],
+    optional: [],
+  },
 ];
 
 export const DEFAULT_UTILITY_ID = UTILITIES[0].id;

@@ -61,6 +61,7 @@ public class UtilityCommandParityTest {
         m.put(UtilityCommand.ADMIN_GET_USERS, admin.get("getUsers"));
         m.put(UtilityCommand.ADMIN_ADD_USER, admin.get("addUser"));
         m.put(UtilityCommand.ADMIN_REMOVE_USER, admin.get("remUser"));
+        m.put(UtilityCommand.ADMIN_SET_VIEWER, admin.get("setViewer"));
         return m;
     }
 

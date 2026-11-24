@@ -347,6 +347,19 @@ General syntax:
         +   `-as [url]` - Applitools alternative server, default: eyes.applitools.com
         +   `-ti [team-id]` - Team id, if set will only be omitted from the team
         +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
++ setViewer - Set an existing team member's permission to view-only (does not add or remove users)
+    + Syntax:
+  > java -jar EyesUtilities.jar admin setViewer -k [api-key] -or [org-id] -ti [team-id] -un [username] <[optional params]>
+  > java -jar EyesUtilities.jar admin setViewer -k [api-key] -or [org-id] -all <[optional params]>
+    + Required parameters:
+        +   `-k [api-key]` - API key with read AND write permissions.
+        +   `-or [org-id]` - Organization id*
+        +   `-ti [team-id]` - Team id. Required unless `-all` is used.
+        +   `-un [username]` - The member's username, as it appears in the org's users (the Username column of getUsers). Required unless `-all` is used.
+    + Optional parameters:
+        +   `-all` - Set **every** member to view-only: all teams in the organization, or only the team given with `-ti`. Prints how many members and teams will change, then waits for you to type `YES`; anything else cancels.
+        +   `-as [url]` - Applitools alternative server, default: eyes.applitools.com
+        +   `-dv` - Disable SSL certificate check and ignore possible errors. Note that using this flag is unsecured and dangerous.
 
           * Organization id (orgId) field can be found as one of the url parameters in the admin/manage panel.
 

@@ -40,7 +40,11 @@ enum UtilityCommand {
     // Team id is required here although the CLI makes it optional: without it, remUser
     // removes the user from the whole organization after an interactive Y/N prompt.
     ADMIN_REMOVE_USER("admin.remUser", KeyKind.API_KEY, false,
-            flags("or", "ri", "ti"), flags(), flags("or", "ri", "ti"));
+            flags("or", "ri", "ti"), flags(), flags("or", "ri", "ti")),
+    // -all is deliberately not allowlisted: it waits for a typed confirmation on stdin, which
+    // the GUI's child process can't give, so the bulk change stays CLI-only.
+    ADMIN_SET_VIEWER("admin.setViewer", KeyKind.API_KEY, false,
+            flags("or", "ti", "un"), flags(), flags("or", "ti", "un"));
 
     enum KeyKind { VIEW_KEY, API_KEY }
 
